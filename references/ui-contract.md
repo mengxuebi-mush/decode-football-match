@@ -35,6 +35,7 @@ Render the full organically selected key-play set in the timeline. Require at le
 ## Motion
 
 - Tactical plays have exactly three phase controls and a quiet replay action.
+- Selecting a tactical play automatically starts its three-phase sequence from the first phase. Context moments do not autoplay.
 - Replay continuously interpolates stable player identities, lines, zones, and arrows. It must not look like slide changes.
 - Manual phase selection interrupts autoplay immediately.
 - Replay stops on the final phase.

@@ -102,7 +102,7 @@ npm install
 npm run build
 ```
 
-Resolve every validation error. Also inspect the rendered desktop and mobile layouts against `assets/visual-baselines/`. Verify autoplay, manual interruption, final-state stopping, reduced-motion fallback, internal scrolling, and URL state such as `?moment=two-v-one&phase=decision`.
+Resolve every validation error. Also inspect the rendered desktop and mobile layouts against `assets/visual-baselines/`. Verify that selecting a tactical play automatically starts its three-phase sequence, manual phase selection interrupts it, replay restarts from phase one, playback stops after the final interpolation, reduced-motion fallback works, internal scrolling works, and URL state such as `?moment=two-v-one&phase=decision` remains addressable without forced autoplay.
 
 ### 8. Open the direct preview
 
@@ -122,6 +122,7 @@ Finish only when:
 - unsupported claims have been removed;
 - context precedes plays;
 - every play has exactly three meaningful phases and stable identities;
+- selecting any tactical play automatically plays all three phases with continuous player motion;
 - every concept has definition, watch cue, dilemma, and transfer cue;
 - both validation and production build pass;
 - desktop and mobile preserve the Match Room UI contract;

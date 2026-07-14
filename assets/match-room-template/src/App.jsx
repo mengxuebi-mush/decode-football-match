@@ -8,13 +8,14 @@ const TWEEN_MS = 850;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const ease = (t) => 1 - Math.pow(1 - t, 3);
 const mix = (a, b, t) => a + (b - a) * t;
+const shouldAutoplay = (moment) => moment.group === "play" && moment.phases.length === 3;
 
 function resolveInitialState(moments) {
   const params = new URLSearchParams(window.location.search);
   const momentIndex = Math.max(0, moments.findIndex((item) => item.id === params.get("moment")));
   const moment = moments[momentIndex] ?? moments[0];
   const phaseIndex = Math.max(0, moment.phases.findIndex((item) => item.id === params.get("phase")));
-  return { momentIndex, phaseIndex };
+  return { momentIndex, phaseIndex, hasExplicitPhase: params.has("phase") };
 }
 
 function useReducedMotion() {
@@ -153,7 +154,10 @@ export function App() {
   const [momentIndex, setMomentIndex] = useState(initial.momentIndex);
   const [phaseIndex, setPhaseIndex] = useState(initial.phaseIndex);
   const [transition, setTransition] = useState(1);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(() => {
+    const initialMoment = matchData.moments[initial.momentIndex];
+    return !initial.hasExplicitPhase && shouldAutoplay(initialMoment);
+  });
   const reducedMotion = useReducedMotion();
   const moment = matchData.moments[momentIndex];
   const sourceMap = useMemo(() => new Map(matchData.sources.map((source) => [source.id, source])), []);
@@ -167,8 +171,11 @@ export function App() {
 
   useEffect(() => {
     if (!playing) return undefined;
-    if (phaseIndex >= moment.phases.length - 1) { setPlaying(false); return undefined; }
-    const timer = window.setTimeout(() => { setPhaseIndex((value) => value + 1); setTransition(reducedMotion ? 1 : 0); }, PHASE_MS);
+    if (phaseIndex >= moment.phases.length - 1) return undefined;
+    const timer = window.setTimeout(() => {
+      setPhaseIndex((value) => Math.min(value + 1, moment.phases.length - 1));
+      setTransition(reducedMotion ? 1 : 0);
+    }, PHASE_MS);
     return () => window.clearTimeout(timer);
   }, [playing, phaseIndex, moment, reducedMotion]);
 
@@ -179,7 +186,17 @@ export function App() {
     frame = requestAnimationFrame(animate); return () => cancelAnimationFrame(frame);
   }, [phaseIndex, reducedMotion]);
 
-  const chooseMoment = (index) => { setPlaying(false); setMomentIndex(index); setPhaseIndex(0); setTransition(1); };
+  useEffect(() => {
+    if (playing && phaseIndex === moment.phases.length - 1 && transition >= 1) setPlaying(false);
+  }, [playing, phaseIndex, transition, moment]);
+
+  const chooseMoment = (index) => {
+    const nextMoment = matchData.moments[index];
+    setMomentIndex(index);
+    setPhaseIndex(0);
+    setTransition(1);
+    setPlaying(shouldAutoplay(nextMoment));
+  };
   const choosePhase = (index) => { setPlaying(false); setPhaseIndex(index); setTransition(reducedMotion ? 1 : 0); };
   const replay = () => { setPhaseIndex(0); setTransition(1); setPlaying(moment.phases.length > 1); };
 

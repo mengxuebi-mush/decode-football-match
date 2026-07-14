@@ -119,7 +119,7 @@ Every play has exactly three phases. Each phase requires:
 - `players`: array of player objects.
 - optional `arrows`, `lines`, and `zones`.
 
-Context moments may have one to three phases and do not autoplay by default.
+Tactical plays automatically play all three phases when selected. Context moments may have one to three phases and do not autoplay by default.
 
 ### Player
 
