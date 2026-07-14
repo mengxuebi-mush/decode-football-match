@@ -9,6 +9,7 @@
   "schemaVersion": 1,
   "locale": "en",
   "match": {},
+  "videoSelection": {},
   "keyPlaySelection": {},
   "sources": [],
   "moments": []
@@ -35,6 +36,31 @@ Supported locales are `en` and `zh-CN`.
 - `requested`: include only for `explicit`; it must be at least five and equal `included`.
 
 In `auto`, do not store a target. Include all meaningful non-redundant plays from the video. If fewer than five survive after searching for fuller material, do not generate the Match Room. Context moments do not count.
+
+## Video selection
+
+```json
+{
+  "url": "https://www.youtube.com/watch?v=...",
+  "platform": "youtube",
+  "discovery": "youtube-search",
+  "sourceId": "official-highlight",
+  "sourceName": "Official broadcaster",
+  "language": "en",
+  "official": true,
+  "availability": "available",
+  "fallbackReason": ""
+}
+```
+
+- `discovery`: `provided`, `youtube-search`, or `official-fallback`.
+- `platform`: `youtube` or `official-site`.
+- `sourceId`: registered source whose URL matches the selected video.
+- `official`: true for search-selected YouTube videos and official fallbacks. A user-provided video may be false but requires corroboration.
+- `availability`: must be `available` after opening the video in the user's region.
+- `fallbackReason`: required for `official-fallback`; state why YouTube was unavailable.
+
+Without a user URL, require `youtube-search` unless verified regional or playback failure requires `official-fallback`. `match.highlightUrl` must equal `videoSelection.url`.
 
 ## Match
 

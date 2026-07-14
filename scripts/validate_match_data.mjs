@@ -11,6 +11,8 @@ const EVIDENCE = new Set(["official-fact", "reported-fact", "attributed-analysis
 const TEAMS = new Set(["home", "away"]);
 const ROLES = new Set(["actor", "context"]);
 const ARROWS = new Set(["run", "pass", "shot", "recover", "option", "press", "carry"]);
+const VIDEO_PLATFORMS = new Set(["youtube", "official-site"]);
+const VIDEO_DISCOVERY = new Set(["provided", "youtube-search", "official-fallback"]);
 
 const errors = [];
 const fail = (pathName, message) => errors.push(`${pathName}: ${message}`);
@@ -84,6 +86,25 @@ function validate(data) {
   for (const key of ["id", "homeTeam", "awayTeam", "score", "competition", "subtitle", "sourceDisclosure"]) requiredString(data.match?.[key], `match.${key}`);
   if (data.match?.highlightUrl && !validUrl(data.match.highlightUrl)) fail("match.highlightUrl", "must be an http(s) URL or empty");
 
+  const video = data.videoSelection;
+  if (!video || typeof video !== "object") fail("videoSelection", "is required");
+  else {
+    for (const key of ["sourceId", "sourceName", "language", "availability"]) requiredString(video[key], `videoSelection.${key}`);
+    if (!validUrl(video.url)) fail("videoSelection.url", "must be a direct http(s) video URL");
+    if (!VIDEO_PLATFORMS.has(video.platform)) fail("videoSelection.platform", "must be youtube or official-site");
+    if (!VIDEO_DISCOVERY.has(video.discovery)) fail("videoSelection.discovery", "must be provided, youtube-search, or official-fallback");
+    if (typeof video.official !== "boolean") fail("videoSelection.official", "must be boolean");
+    if (video.availability !== "available") fail("videoSelection.availability", "must equal available after regional playback verification");
+    if (video.url !== data.match?.highlightUrl) fail("videoSelection.url", "must equal match.highlightUrl");
+    if (video.discovery === "youtube-search" && video.platform !== "youtube") fail("videoSelection.platform", "must be youtube for youtube-search");
+    if (video.discovery === "youtube-search" && video.official !== true) fail("videoSelection.official", "must be true for a search-selected YouTube video");
+    if (video.discovery === "official-fallback") {
+      if (video.platform !== "official-site") fail("videoSelection.platform", "must be official-site for official-fallback");
+      if (video.official !== true) fail("videoSelection.official", "must be true for official-fallback");
+      requiredString(video.fallbackReason, "videoSelection.fallbackReason");
+    }
+  }
+
   const selection = data.keyPlaySelection;
   if (!selection || typeof selection !== "object") fail("keyPlaySelection", "is required");
   else {
@@ -108,6 +129,13 @@ function validate(data) {
     sourceIds.add(source.id);
     if (!validUrl(source.url)) fail(`${at}.url`, "must be a direct http(s) URL");
     if (!EVIDENCE.has(source.classification)) fail(`${at}.classification`, "unsupported evidence class");
+  }
+  if (video && typeof video === "object") {
+    if (!sourceIds.has(video.sourceId)) fail("videoSelection.sourceId", "must reference a registered source");
+    else {
+      const registeredVideo = data.sources.find((source) => source.id === video.sourceId);
+      if (registeredVideo?.url !== video.url) fail("videoSelection.sourceId", "registered source URL must match videoSelection.url");
+    }
   }
 
   if (!Array.isArray(data.moments) || !data.moments.length) fail("moments", "must contain moments");

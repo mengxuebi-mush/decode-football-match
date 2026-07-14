@@ -34,9 +34,19 @@ Read these files before researching or generating:
 
 Treat `assets/match-room-template/` as an immutable visual base. Modify match content and structured data, not the component hierarchy, visual theme, diagram grammar, responsive behavior, or motion model.
 
-### 2. Establish an evidence register
+### 2. Acquire the primary highlight video
 
-Search for official match reports, team sheets, competition video, reliable reporting, attributed tactical analysis, and official laws when rules are involved. Record each candidate claim with source URL, evidence class, and the exact fact or interpretation it supports.
+Make video discovery the first research action. If the user provides a URL, verify that it shows the requested match, is accessible in the user's region, and record its language and publisher.
+
+If the user does not provide a URL, search YouTube first using the teams, competition, year, “highlights,” and the selected language. Prefer, in order, official competition or federation channels, official team channels, and official broadcaster or rights-holder channels. Do not choose an unofficial reupload when an official version is available.
+
+Open the selected video and verify that the page and playback are available in the user's region rather than relying on a search result alone. If YouTube is blocked, geo-restricted, removed, or otherwise unavailable, search for another official highlight video hosted by the competition, federation, team, broadcaster, or rights holder. Record why the YouTube-first path failed in `videoSelection.fallbackReason`.
+
+Treat articles as supporting evidence, not the primary match surface. Use them to confirm events, lineups, rules, and attributed tactical interpretations; never use article prose to invent spatial movement that the video does not support.
+
+### 3. Establish an evidence register
+
+After selecting the video, search for official match reports, team sheets, reliable reporting, attributed tactical analysis, and official laws when rules are involved. Record each candidate claim with source URL, evidence class, and the exact fact or interpretation it supports. Register the selected video as a source.
 
 Separate:
 
@@ -48,7 +58,7 @@ Separate:
 
 Apply `references/evidence-policy.md`. Omit unsupported formations, positions, timestamps, intentions, causal claims, and player locations. Never turn a plausible inference into a match fact.
 
-### 3. Select teachable moments
+### 4. Select teachable moments
 
 Put `Match context` before `Key tactical plays`. Include only moments that have reliable support and teach a reusable spatial idea. A goal is not automatically a tactical moment.
 
@@ -66,13 +76,13 @@ For every tactical play provide:
 
 Prefer concepts such as decoy run, side overload, local overload, third-player run, rest defense, pinning, line-breaking carry, counterpress, pressing trap, and weak-side isolation only when the evidence and visible sequence support them.
 
-### 4. Build three spatial phases
+### 5. Build three spatial phases
 
 Create exactly three materially different phases for every tactical play. Preserve stable player IDs across phases. Show the relevant ball carrier, supporting attackers, defenders, cover, goalkeeper, defensive units, movement, passing options, and highlighted space when supported.
 
 Use solid actors for recorded event participants and faded contextual players for teaching context. Mark reconstructed spacing and interpolation as teaching motion, not tracking data. Do not claim exact coordinates.
 
-### 5. Scaffold and populate
+### 6. Scaffold and populate
 
 Default to `./football-companion-<match-slug>` unless the user supplies an output path. Run:
 
@@ -82,7 +92,7 @@ python3 <skill-dir>/scripts/scaffold_match_room.py <output-dir> --locale <locale
 
 Replace `<output-dir>/src/match-data.json` with data conforming to `references/content-model.md`. Do not hardcode localized copy in React components; interface labels come from `src/i18n.js`.
 
-### 6. Validate and build
+### 7. Validate and build
 
 Run:
 
@@ -94,7 +104,7 @@ npm run build
 
 Resolve every validation error. Also inspect the rendered desktop and mobile layouts against `assets/visual-baselines/`. Verify autoplay, manual interruption, final-state stopping, reduced-motion fallback, internal scrolling, and URL state such as `?moment=two-v-one&phase=decision`.
 
-### 7. Open the direct preview
+### 8. Open the direct preview
 
 Start the local Vite preview, capture its actual port, and open the direct preview beside Codex. Do not use Lavish. Do not embed a fake chat panel or simulated agent. The user asks follow-up questions in the real Codex task; use URL state to understand the visible moment and phase.
 
@@ -107,6 +117,7 @@ For `en`, render all interface labels, explanations, phase names, and teaching c
 Finish only when:
 
 - every match-specific claim has a registered source and evidence class;
+- `videoSelection` records a verified, region-available primary video; absent a user URL, it records YouTube-first discovery or an explained official fallback;
 - `keyPlaySelection.included` matches the timeline, is at least five, and was selected from the video without a default target or maximum;
 - unsupported claims have been removed;
 - context precedes plays;

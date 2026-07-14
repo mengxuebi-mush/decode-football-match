@@ -33,6 +33,7 @@ def localize_placeholder(data: dict, locale: str) -> dict:
         subtitle="请用有来源的真实比赛数据替换教学样例",
         sourceDisclosure="仅为模板演示，发布前必须替换。",
     )
+    data["videoSelection"]["fallbackReason"] = "虚构演示没有真实的YouTube视频；生成真实比赛时必须先搜索YouTube。"
     translations = {
         "Kick-off": "开场",
         "Both base shapes": "双方基础队形",

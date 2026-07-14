@@ -11,6 +11,17 @@
     "highlightUrl": "https://example.com/demo-highlight",
     "sourceDisclosure": "Demo content only — replace before publishing."
   },
+  "videoSelection": {
+    "url": "https://example.com/demo-highlight",
+    "platform": "official-site",
+    "discovery": "official-fallback",
+    "sourceId": "demo-video",
+    "sourceName": "Demo official highlight",
+    "language": "en",
+    "official": true,
+    "availability": "available",
+    "fallbackReason": "The fictional demo has no real YouTube video; generated Match Rooms must search YouTube first."
+  },
   "keyPlaySelection": {
     "minimum": 5,
     "included": 5,
@@ -18,6 +29,14 @@
     "selectionRationale": "Five distinct, evidence-backed, spatially teachable plays survived review of the video."
   },
   "sources": [
+    {
+      "id": "demo-video",
+      "name": "Demo official highlight",
+      "url": "https://example.com/demo-highlight",
+      "language": "en",
+      "classification": "official-fact",
+      "supports": "Placeholder primary video for template validation only."
+    },
     {
       "id": "demo-report",
       "name": "Demo match report",

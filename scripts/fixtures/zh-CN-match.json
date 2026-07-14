@@ -11,6 +11,17 @@
     "highlightUrl": "https://example.com/demo-highlight",
     "sourceDisclosure": "仅为模板演示，发布前必须替换。"
   },
+  "videoSelection": {
+    "url": "https://example.com/demo-highlight",
+    "platform": "official-site",
+    "discovery": "official-fallback",
+    "sourceId": "demo-video",
+    "sourceName": "Demo official highlight",
+    "language": "en",
+    "official": true,
+    "availability": "available",
+    "fallbackReason": "虚构演示没有真实的YouTube视频；生成真实比赛时必须先搜索YouTube。"
+  },
   "keyPlaySelection": {
     "minimum": 5,
     "included": 5,
@@ -18,6 +29,14 @@
     "selectionRationale": "视频中有5个不同、证据充分且具有空间教学价值的战术回合通过筛选。"
   },
   "sources": [
+    {
+      "id": "demo-video",
+      "name": "Demo official highlight",
+      "url": "https://example.com/demo-highlight",
+      "language": "en",
+      "classification": "official-fact",
+      "supports": "Placeholder primary video for template validation only."
+    },
     {
       "id": "demo-report",
       "name": "Demo match report",

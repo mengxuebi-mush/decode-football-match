@@ -4,13 +4,22 @@
 
 Use the strongest available source for each claim:
 
-1. Official competition or federation match reports, lineups, disciplinary records, video, and laws.
-2. Official club or national-team material for confirmed personnel and attributed statements.
-3. Reputable match reporting for recorded events and timestamps.
-4. Named, attributable tactical analysis for shape and tactical interpretation.
-5. Established coaching or laws material for reusable football concepts.
+1. Region-available official match video from the competition, federation, team, broadcaster, or rights holder.
+2. Official competition or federation match reports, lineups, disciplinary records, and laws.
+3. Official club or national-team material for confirmed personnel and attributed statements.
+4. Reputable match reporting for recorded events and timestamps.
+5. Named, attributable tactical analysis for shape and tactical interpretation.
+6. Established coaching or laws material for reusable football concepts.
 
 Search in the selected locale first. A source in another language is acceptable when it is stronger or the only reliable source; disclose this in `sourceDisclosure`.
+
+## Video-first discovery
+
+When the user supplies no URL, search YouTube before articles or other video platforms. Search with the two teams, competition, year, “highlights,” and the selected language. Prefer official competition, federation, team, broadcaster, and rights-holder channels.
+
+Verify the chosen YouTube video opens and is playable in the user's region. A search-result snippet is not availability proof. If YouTube is blocked or the video is geo-restricted, removed, private, age-blocked, or otherwise unavailable, use another official highlight host and record the reason. Do not switch to an unofficial reupload merely to stay on YouTube.
+
+Articles may corroborate events and provide attributed analysis, but they cannot replace video evidence for a reconstructed spatial sequence.
 
 ## Evidence classes
 
@@ -60,4 +69,4 @@ For each source store:
 - `classification`;
 - short `supports` statement.
 
-Use direct links. Prefer the official highlight over reuploads. Never fabricate a URL, publication, quote, timestamp, lineup, or analyst.
+Use direct links. Prefer the official highlight over reuploads. Never fabricate a URL, publication, quote, timestamp, lineup, analyst, channel identity, playback availability, or regional restriction.
