@@ -9,9 +9,9 @@ Create a sourced, runnable tactical-learning experience for a casual fan. Keep t
 
 ## Inputs
 
-Accept a match, competition or year, learning goal, optional highlight URL, optional locale, optional key-play count, and optional output directory. If the match identity is ambiguous and reliable research cannot resolve it, ask one concise question. Otherwise proceed.
+Accept a match, competition or year, learning goal, optional highlight URL, optional locale, optional explicit key-play count, and optional output directory. If the match identity is ambiguous and reliable research cannot resolve it, ask one concise question. Otherwise proceed.
 
-Interpret requests such as “include 8 key plays” or “只要最重要的5个回合” as an explicit `keyPlaySelection.target`. If the user gives no count, target 6 tactical plays. Prefer 5–8 for a full-match experience and allow 1–12 when explicitly requested.
+Choose the number of key plays organically from the video and evidence. Do not ask the user for a count and do not apply a default target or maximum. Require at least five distinct, evidence-backed tactical plays. Treat a user-provided number as an optional explicit override, never as the normal flow.
 
 Choose the locale in this order:
 
@@ -52,7 +52,9 @@ Apply `references/evidence-policy.md`. Omit unsupported formations, positions, t
 
 Put `Match context` before `Key tactical plays`. Include only moments that have reliable support and teach a reusable spatial idea. A goal is not automatically a tactical moment.
 
-Build a ranked candidate list before drawing. Rank by evidence strength, tactical reusability, spatial clarity, and variety. Stop at `keyPlaySelection.target`; do not add weaker filler after the target is reached. If reliable evidence supports fewer plays than requested, include fewer, set `included` to the actual count, and explain the shortfall in `limitationNote`. Never lower the evidence gate to satisfy the number.
+Build a candidate list from the whole available video before drawing. Rank by evidence strength, tactical reusability, spatial clarity, and variety. Remove administrative events, spatially unclear moments, and plays that merely repeat an already-covered idea. Include every remaining meaningful play; stop when another play adds no new tactical understanding. Do not impose a numeric maximum.
+
+Require at least five surviving plays. If the first highlight yields fewer than five, search for a longer or alternative highlight and supporting reliable material. If fewer than five still survive, stop and report that the source material is insufficient; never fabricate or weaken the evidence gate to reach the minimum.
 
 For every tactical play provide:
 
@@ -75,7 +77,7 @@ Use solid actors for recorded event participants and faded contextual players fo
 Default to `./football-companion-<match-slug>` unless the user supplies an output path. Run:
 
 ```bash
-python3 <skill-dir>/scripts/scaffold_match_room.py <output-dir> --locale <locale> --key-plays <target>
+python3 <skill-dir>/scripts/scaffold_match_room.py <output-dir> --locale <locale>
 ```
 
 Replace `<output-dir>/src/match-data.json` with data conforming to `references/content-model.md`. Do not hardcode localized copy in React components; interface labels come from `src/i18n.js`.
@@ -105,7 +107,7 @@ For `en`, render all interface labels, explanations, phase names, and teaching c
 Finish only when:
 
 - every match-specific claim has a registered source and evidence class;
-- the number of tactical plays matches `keyPlaySelection.included`, never exceeds its target, and explains any evidence-limited shortfall;
+- `keyPlaySelection.included` matches the timeline, is at least five, and was selected from the video without a default target or maximum;
 - unsupported claims have been removed;
 - context precedes plays;
 - every play has exactly three meaningful phases and stable identities;

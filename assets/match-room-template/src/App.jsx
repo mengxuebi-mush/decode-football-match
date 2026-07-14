@@ -195,7 +195,6 @@ export function App() {
             <section className={`timeline-group ${group}`} key={group}>
               <div className="timeline-group-head"><p className="section-label">{group === "context" ? copy.context : copy.plays}</p><span>{items.length}</span></div>
               <div className="timeline-items">{items.map(({ item, index }) => <button className={`moment-card ${index === momentIndex ? "active" : ""}`} key={item.id} onClick={() => chooseMoment(index)}><i className="moment-dot" /><span className="moment-time">{item.time}</span><strong>{item.short}</strong>{item.concept && <span className="tactic-chip">{item.concept.name}</span>}<span className="evidence-chip">{item.evidenceLabel}</span></button>)}</div>
-              {group === "play" && matchData.keyPlaySelection.limitationNote && <p className="selection-note">{matchData.keyPlaySelection.limitationNote}</p>}
             </section>
           ); })}
         </nav>

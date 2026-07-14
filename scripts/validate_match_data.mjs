@@ -87,11 +87,16 @@ function validate(data) {
   const selection = data.keyPlaySelection;
   if (!selection || typeof selection !== "object") fail("keyPlaySelection", "is required");
   else {
-    if (!Number.isInteger(selection.target) || selection.target < 1 || selection.target > 12) fail("keyPlaySelection.target", "must be an integer from 1 to 12");
-    if (!Number.isInteger(selection.included) || selection.included < 1 || selection.included > 12) fail("keyPlaySelection.included", "must be an integer from 1 to 12");
+    if (selection.minimum !== 5) fail("keyPlaySelection.minimum", "must equal 5");
+    if (!Number.isInteger(selection.included) || selection.included < 5) fail("keyPlaySelection.included", "must be an integer of at least 5");
     if (!new Set(["auto", "explicit"]).has(selection.strategy)) fail("keyPlaySelection.strategy", "must be auto or explicit");
-    if (Number.isInteger(selection.target) && Number.isInteger(selection.included) && selection.included > selection.target) fail("keyPlaySelection.included", "cannot exceed target");
-    if (Number.isInteger(selection.target) && Number.isInteger(selection.included) && selection.included < selection.target) requiredString(selection.limitationNote, "keyPlaySelection.limitationNote");
+    requiredString(selection.selectionRationale, "keyPlaySelection.selectionRationale");
+    if (Object.hasOwn(selection, "target")) fail("keyPlaySelection.target", "is obsolete; organic selection has no target or maximum");
+    if (selection.strategy === "auto" && Object.hasOwn(selection, "requested")) fail("keyPlaySelection.requested", "must be omitted for organic auto selection");
+    if (selection.strategy === "explicit") {
+      if (!Number.isInteger(selection.requested) || selection.requested < 5) fail("keyPlaySelection.requested", "must be an integer of at least 5 for explicit selection");
+      if (Number.isInteger(selection.requested) && Number.isInteger(selection.included) && selection.included !== selection.requested) fail("keyPlaySelection.included", "must equal requested for explicit selection");
+    }
   }
 
   if (!Array.isArray(data.sources) || !data.sources.length) fail("sources", "must contain at least one source");
@@ -155,4 +160,4 @@ if (errors.length) {
   errors.forEach((error) => console.error(`- ${error}`));
   process.exit(1);
 }
-console.log(`Validated ${data.match.homeTeam} ${data.match.score} ${data.match.awayTeam} (${data.locale}); ${data.keyPlaySelection.included}/${data.keyPlaySelection.target} key plays, ${data.sources.length} sources.`);
+console.log(`Validated ${data.match.homeTeam} ${data.match.score} ${data.match.awayTeam} (${data.locale}); ${data.keyPlaySelection.included} key plays (${data.keyPlaySelection.strategy}), ${data.sources.length} sources.`);

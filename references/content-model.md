@@ -21,19 +21,20 @@ Supported locales are `en` and `zh-CN`.
 
 ```json
 {
-  "target": 6,
-  "included": 6,
+  "minimum": 5,
+  "included": 7,
   "strategy": "auto",
-  "limitationNote": ""
+  "selectionRationale": "Seven distinct evidence-backed tactical plays survived review."
 }
 ```
 
-- `target`: requested number of tactical plays. Default to 6; accept 1–12.
-- `included`: actual number of moments whose `group` is `play`.
-- `strategy`: `auto` when the default is used, or `explicit` when the user provides a number.
-- `limitationNote`: required localized disclosure when `included` is lower than `target` because the evidence gate removed candidates.
+- `minimum`: always `5`.
+- `included`: actual number of moments whose `group` is `play`; it must be at least five and has no maximum.
+- `strategy`: `auto` for organic video-based selection, or `explicit` only when the user provides a number.
+- `selectionRationale`: localized explanation of why this set survived evidence, spatial-clarity, usefulness, and redundancy review.
+- `requested`: include only for `explicit`; it must be at least five and equal `included`.
 
-Never exceed `target`. Never add unsupported filler to reach it. Context moments do not count toward either number.
+In `auto`, do not store a target. Include all meaningful non-redundant plays from the video. If fewer than five survive after searching for fuller material, do not generate the Match Room. Context moments do not count.
 
 ## Match
 

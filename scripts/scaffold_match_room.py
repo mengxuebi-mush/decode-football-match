@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Scaffold a Football Companion Match Room")
     parser.add_argument("output", type=Path, help="Output directory")
     parser.add_argument("--locale", choices=SUPPORTED_LOCALES, default="en")
-    parser.add_argument("--key-plays", type=int, choices=range(1, 13), metavar="1-12", help="Target number of tactical plays")
+    parser.add_argument("--key-plays", type=int, metavar="N", help="Optional explicit play count; must be at least 5")
     parser.add_argument("--data", type=Path, help="Optional match-data.json to install")
     parser.add_argument("--force", action="store_true", help="Replace an existing output directory")
     return parser.parse_args()
@@ -110,6 +110,21 @@ def localize_placeholder(data: dict, locale: str) -> dict:
         "Rest defense": "剩余防守",
         "Cover triangle": "保护三角",
         "Counter controlled": "反击受控",
+        "88′": "88′",
+        "The nearest players press after losing the ball": "丢球后，最近的球员立即施压",
+        "An immediate counterpress closes the opponent's first escape": "即时反抢封住对手的第一条出球线路",
+        "three nearest pressers · first escape pass": "三名最近的反抢球员 · 第一条出球线路",
+        "The attacking midfielder loses the ball with teammates already close.": "进攻中场丢失球权，队友已经处在附近。",
+        "The three nearest players close the receiver and the short passing lane.": "最近的三名球员同时封堵接球者和短传线路。",
+        "The first escape is blocked and the ball is forced backward.": "第一条出球线路被封住，球被迫回传。",
+        "Collapse": "合围",
+        "Receiver": "接球者",
+        "Escape option": "出球选择",
+        "Press": "施压",
+        "Forced backward": "迫使回传",
+        "Crowded ball zone": "球附近的密集区域",
+        "Pressing cage": "反抢包围圈",
+        "Escape blocked": "出球受阻",
     }
     for moment in data["moments"]:
         for key in ("time", "short", "title", "evidenceLabel"):
@@ -155,30 +170,50 @@ def localize_placeholder(data: dict, locale: str) -> dict:
                     "dilemma": "再增加一名禁区进攻者，还是保留足够的反击保护。",
                     "transferCue": "传中后数一数仍在球后保持连接的球员。",
                 },
+                "Counterpress": {
+                    "name": "即时反抢",
+                    "definition": "球队丢失球权后立即施压，阻止对手摆脱。",
+                    "watchCue": "转换发生后，先看离球最近的球员，再追随球。",
+                    "dilemma": "向前施压困住接球者，还是回撤保护球门并让出第一传。",
+                    "transferCue": "以后留意丢球后的几秒内，多名附近球员是否同时扑向球。",
+                },
             }
             moment["concept"].update(concept_translations[moment["concept"]["canonicalTerm"]])
     return data
 
 
 def apply_key_play_target(data: dict, target: int | None, locale: str) -> dict:
-    if target is None:
-        return data
     context = [moment for moment in data["moments"] if moment["group"] == "context"]
     plays = [moment for moment in data["moments"] if moment["group"] == "play"]
-    included = min(target, len(plays))
-    data["moments"] = context + plays[:included]
-    note = ""
-    if included < target:
-        note = (
-            f"演示模板只有{included}个回合；生成真实比赛时应研究最多{target}个有可靠证据的回合。"
-            if locale == "zh-CN"
-            else f"The demo contains {included} plays; research up to {target} evidence-backed plays for a real match."
-        )
+    if len(plays) < 5:
+        raise ValueError("the template must contain at least 5 tactical plays")
+    if target is None:
+        data["keyPlaySelection"] = {
+            "minimum": 5,
+            "included": len(plays),
+            "strategy": "auto",
+            "selectionRationale": (
+                f"视频中有{len(plays)}个不同、证据充分且具有空间教学价值的战术回合通过筛选。"
+                if locale == "zh-CN"
+                else f"{len(plays)} distinct, evidence-backed, spatially teachable plays survived review of the video."
+            ),
+        }
+        return data
+    if target < 5:
+        raise ValueError("--key-plays must be at least 5")
+    if target > len(plays):
+        raise ValueError(f"the demo contains only {len(plays)} plays; provide match data before requesting {target}")
+    data["moments"] = context + plays[:target]
     data["keyPlaySelection"] = {
-        "target": target,
-        "included": included,
+        "minimum": 5,
+        "included": target,
         "strategy": "explicit",
-        "limitationNote": note,
+        "requested": target,
+        "selectionRationale": (
+            f"按照用户明确要求，选择了{target}个证据充分且具有空间教学价值的战术回合。"
+            if locale == "zh-CN"
+            else f"Selected {target} evidence-backed, spatially teachable plays at the user's explicit request."
+        ),
     }
     return data
 
@@ -207,12 +242,16 @@ def main() -> int:
             data = json.load(handle)
         data = localize_placeholder(data, args.locale)
 
-    data = apply_key_play_target(data, args.key_plays, args.locale)
+    try:
+        data = apply_key_play_target(data, args.key_plays, args.locale)
+    except ValueError as error:
+        print(f"error: {error}", file=sys.stderr)
+        return 2
 
     target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Scaffolded Match Room at {output}")
     print(f"Locale: {args.locale}")
-    print(f"Key plays: {data['keyPlaySelection']['included']}/{data['keyPlaySelection']['target']}")
+    print(f"Key plays: {data['keyPlaySelection']['included']} selected from the video")
     print("Next: replace src/match-data.json, validate, npm install, and npm run build")
     return 0
 

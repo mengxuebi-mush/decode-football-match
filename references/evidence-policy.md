@@ -38,7 +38,7 @@ If only an analyst supports a claim, write “Analysis by … describes …” r
 
 Omit a moment when the available evidence cannot support the spatial lesson. Fewer trustworthy moments are better than a complete-looking timeline.
 
-The requested key-play count is a ceiling and a research target, not permission to weaken evidence. When fewer moments survive, disclose the requested and included counts and state that unsupported candidates were omitted.
+Select key plays organically from the available video. Require at least five and impose no maximum. Count only distinct moments with reliable evidence, clear spatial teaching value, and a reusable tactical concept. When fewer than five survive, find fuller source material; if that still fails, stop rather than fabricate.
 
 ## Concept boundary
 

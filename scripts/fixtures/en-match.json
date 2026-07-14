@@ -12,10 +12,10 @@
     "sourceDisclosure": "Demo content only — replace before publishing."
   },
   "keyPlaySelection": {
-    "target": 4,
-    "included": 4,
+    "minimum": 5,
+    "included": 5,
     "strategy": "auto",
-    "limitationNote": ""
+    "selectionRationale": "5 distinct, evidence-backed, spatially teachable plays survived review of the video."
   },
   "sources": [
     {
@@ -1483,6 +1483,266 @@
               "y": 50,
               "radius": 11,
               "label": "Counter controlled"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "counterpress",
+      "group": "play",
+      "time": "88′",
+      "short": "The nearest players press after losing the ball",
+      "title": "An immediate counterpress closes the opponent's first escape",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "Demo sequence + football concept",
+      "legendSummary": "three nearest pressers · first escape pass",
+      "concept": {
+        "name": "Counterpress",
+        "canonicalTerm": "Counterpress",
+        "definition": "The team presses immediately after losing possession to stop the opponent escaping.",
+        "watchCue": "After the turnover, watch the nearest players before following the ball.",
+        "dilemma": "Press forward to trap the receiver, or recover toward goal and concede the first pass.",
+        "transferCue": "Look for several nearby players moving toward the ball within the first seconds of a turnover."
+      },
+      "phases": [
+        {
+          "id": "turnover",
+          "label": "Turnover",
+          "note": "The attacking midfielder loses the ball with teammates already close.",
+          "players": [
+            {
+              "id": "h-10",
+              "x": 70,
+              "y": 48,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 64,
+              "y": 36,
+              "team": "home",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 68,
+              "y": 66,
+              "team": "home",
+              "number": "7",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 72,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "Receiver",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 59,
+              "y": 55,
+              "team": "away",
+              "number": "8",
+              "name": "Escape option",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                70,
+                48
+              ],
+              "to": [
+                72,
+                50
+              ],
+              "type": "pass",
+              "label": "Turnover"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 70,
+              "y": 50,
+              "radius": 13,
+              "label": "Crowded ball zone"
+            }
+          ]
+        },
+        {
+          "id": "collapse",
+          "label": "Collapse",
+          "note": "The three nearest players close the receiver and the short passing lane.",
+          "players": [
+            {
+              "id": "h-10",
+              "x": 73,
+              "y": 47,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 69,
+              "y": 40,
+              "team": "home",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 70,
+              "y": 60,
+              "team": "home",
+              "number": "7",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 74,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "Receiver",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 62,
+              "y": 55,
+              "team": "away",
+              "number": "8",
+              "name": "Escape option",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                69,
+                40
+              ],
+              "to": [
+                74,
+                50
+              ],
+              "type": "press",
+              "label": "Press"
+            },
+            {
+              "from": [
+                70,
+                60
+              ],
+              "to": [
+                74,
+                50
+              ],
+              "type": "press",
+              "label": "Press"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 73,
+              "y": 50,
+              "radius": 10,
+              "label": "Pressing cage"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome",
+          "note": "The first escape is blocked and the ball is forced backward.",
+          "players": [
+            {
+              "id": "h-10",
+              "x": 76,
+              "y": 45,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 73,
+              "y": 40,
+              "team": "home",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 74,
+              "y": 59,
+              "team": "home",
+              "number": "7",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 77,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "Receiver",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 66,
+              "y": 55,
+              "team": "away",
+              "number": "8",
+              "name": "Escape option",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                77,
+                50
+              ],
+              "to": [
+                62,
+                50
+              ],
+              "type": "pass",
+              "label": "Forced backward"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 76,
+              "y": 50,
+              "radius": 9,
+              "label": "Escape blocked"
             }
           ]
         }

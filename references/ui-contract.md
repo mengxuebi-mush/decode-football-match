@@ -20,7 +20,7 @@ Use one viewport with internal scrolling:
 
 Place `Match context` before `Key tactical plays`. Never add an embedded fake chat panel.
 
-Render the full selected key-play set in the timeline. A normal full-match room targets six plays; a one-play timeline is valid only when the user explicitly requests one or the evidence-limitation disclosure explains why only one survived.
+Render the full organically selected key-play set in the timeline. Require at least five plays and impose no UI maximum; the timeline scrolls internally as needed. Do not truncate the set merely to keep the timeline short.
 
 ## Pitch anatomy
 

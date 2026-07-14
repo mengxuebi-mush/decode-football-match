@@ -12,10 +12,10 @@
     "sourceDisclosure": "仅为模板演示，发布前必须替换。"
   },
   "keyPlaySelection": {
-    "target": 4,
-    "included": 4,
+    "minimum": 5,
+    "included": 5,
     "strategy": "auto",
-    "limitationNote": ""
+    "selectionRationale": "视频中有5个不同、证据充分且具有空间教学价值的战术回合通过筛选。"
   },
   "sources": [
     {
@@ -1483,6 +1483,266 @@
               "y": 50,
               "radius": 11,
               "label": "反击受控"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "counterpress",
+      "group": "play",
+      "time": "88′",
+      "short": "丢球后，最近的球员立即施压",
+      "title": "即时反抢封住对手的第一条出球线路",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "演示回合 + 足球概念",
+      "legendSummary": "三名最近的反抢球员 · 第一条出球线路",
+      "concept": {
+        "name": "即时反抢",
+        "canonicalTerm": "Counterpress",
+        "definition": "球队丢失球权后立即施压，阻止对手摆脱。",
+        "watchCue": "转换发生后，先看离球最近的球员，再追随球。",
+        "dilemma": "向前施压困住接球者，还是回撤保护球门并让出第一传。",
+        "transferCue": "以后留意丢球后的几秒内，多名附近球员是否同时扑向球。"
+      },
+      "phases": [
+        {
+          "id": "turnover",
+          "label": "转换",
+          "note": "进攻中场丢失球权，队友已经处在附近。",
+          "players": [
+            {
+              "id": "h-10",
+              "x": 70,
+              "y": 48,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 64,
+              "y": 36,
+              "team": "home",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 68,
+              "y": 66,
+              "team": "home",
+              "number": "7",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 72,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "接球者",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 59,
+              "y": 55,
+              "team": "away",
+              "number": "8",
+              "name": "出球选择",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                70,
+                48
+              ],
+              "to": [
+                72,
+                50
+              ],
+              "type": "pass",
+              "label": "转换"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 70,
+              "y": 50,
+              "radius": 13,
+              "label": "球附近的密集区域"
+            }
+          ]
+        },
+        {
+          "id": "collapse",
+          "label": "合围",
+          "note": "最近的三名球员同时封堵接球者和短传线路。",
+          "players": [
+            {
+              "id": "h-10",
+              "x": 73,
+              "y": 47,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 69,
+              "y": 40,
+              "team": "home",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 70,
+              "y": 60,
+              "team": "home",
+              "number": "7",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 74,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "接球者",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 62,
+              "y": 55,
+              "team": "away",
+              "number": "8",
+              "name": "出球选择",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                69,
+                40
+              ],
+              "to": [
+                74,
+                50
+              ],
+              "type": "press",
+              "label": "施压"
+            },
+            {
+              "from": [
+                70,
+                60
+              ],
+              "to": [
+                74,
+                50
+              ],
+              "type": "press",
+              "label": "施压"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 73,
+              "y": 50,
+              "radius": 10,
+              "label": "反抢包围圈"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "结果",
+          "note": "第一条出球线路被封住，球被迫回传。",
+          "players": [
+            {
+              "id": "h-10",
+              "x": 76,
+              "y": 45,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 73,
+              "y": 40,
+              "team": "home",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 74,
+              "y": 59,
+              "team": "home",
+              "number": "7",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 77,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "接球者",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 66,
+              "y": 55,
+              "team": "away",
+              "number": "8",
+              "name": "出球选择",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                77,
+                50
+              ],
+              "to": [
+                62,
+                50
+              ],
+              "type": "pass",
+              "label": "迫使回传"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 76,
+              "y": 50,
+              "radius": 9,
+              "label": "出球受阻"
             }
           ]
         }

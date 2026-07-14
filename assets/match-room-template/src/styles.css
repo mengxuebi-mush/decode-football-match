@@ -89,7 +89,6 @@ button { color: inherit; }
 .timeline-group-head .section-label { margin: 0; color: #b8c3b6; }
 .timeline-group-head span { min-width: 20px; padding: 2px 6px; border-radius: 999px; color: #8e9b8d; background: #172019; font-size: 10px; text-align: center; }
 .timeline-items { position: relative; display: grid; gap: 5px; }
-.selection-note { margin: 9px 8px 2px 27px; color: #8e9b8d; font-size: 10px; line-height: 1.45; }
 .timeline-items::before { content: ""; position: absolute; left: 10px; top: 24px; bottom: 24px; width: 1px; background: #314034; }
 .timeline-group.context .timeline-group-head .section-label { color: #858f86; }
 .timeline-group.context .moment-card:not(.active) { opacity: .74; }
@@ -195,7 +194,6 @@ button { color: inherit; }
   .timeline-group + .timeline-group { padding-left: 10px; }
   .timeline-group-head { width: auto; min-width: 0; padding: 0 4px; writing-mode: initial; flex-direction: row; justify-content: space-between; }
   .timeline-items { min-width: 0; }
-  .selection-note { display: none; }
   .moment-card { height: 76px; min-height: 76px; padding: 7px 9px; }
   .moment-card strong { font-size: 11px; }.moment-time { font-size: 13px; }
   .evidence-chip { display: none; }
