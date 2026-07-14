@@ -8,6 +8,9 @@ The files in `assets/match-room-template/` are the fixed interface. Populate dat
 - Charcoal-black surfaces, muted pitch greens, restrained gold emphasis, red opposition accents.
 - No gradients as decorative theme, glassmorphism, bright dashboard color coding, generic card grids, gamification, progress UI, quizzes, or knowledge trees.
 - Typography is quiet and editorial. The match and pitch dominate; chrome recedes.
+- Use the bundled Atkinson Hyperlegible files for Latin text, with system Chinese fallbacks. Do not fetch fonts at runtime.
+- No visible interface, timeline, teaching, legend, or canvas text may render below 14px.
+- Normal text must meet a 4.5:1 contrast ratio. Large text and essential graphical controls must meet 3:1. Do not lower contrast by applying opacity to a parent containing text.
 
 ## Desktop hierarchy
 
@@ -22,6 +25,8 @@ Place `Match context` before `Key tactical plays`. Never add an embedded fake ch
 
 Render the full organically selected key-play set in the timeline. Require at least five plays and impose no UI maximum; the timeline scrolls internally as needed. Do not truncate the set merely to keep the timeline short.
 
+Timeline cards show only the match time, plain-language moment title, and reusable tactical concept. Keep source and evidence classifications near the analysis title, not inside the timeline. Cards must grow with localized content; never use a fixed height for variable text.
+
 ## Pitch anatomy
 
 - Render alternating vertical grass stripes.
@@ -31,6 +36,8 @@ Render the full organically selected key-play set in the timeline. Require at le
 - Use solid opacity for event actors and faded opacity for contextual teaching players.
 - Use dashed unit/formation lines; never let them resemble a pass.
 - Formation comparison places both teams on the same full pitch, each in its own half. Connect each formation line so the first `4`, midfield line, and forward line are legible.
+- Keep a readable landscape pitch ratio. On a narrow phone, preserve the pitch width and allow horizontal scrolling inside the pitch surface instead of squeezing names into collisions.
+- Place 14px-or-larger player labels with collision-aware candidate positions. Labels may use a leader line when displaced. Never allow player names, numbers, or zone labels to overlap each other.
 
 ## Motion
 
@@ -60,8 +67,25 @@ Do not use the card for source provenance labels such as “Verified sequence.�
 - Desktop uses a fixed viewport; timeline and learning card scroll internally when needed.
 - At tablet width, move the timeline into a horizontal rail above the pitch.
 - On mobile, simplify secondary chrome, retain phase controls and concept content, and avoid an excessively tall document.
-- Minimum touch target is 40px where space permits.
+- Minimum interactive target is 44px in both dimensions.
 - Localized labels must wrap without overflow.
+- At 200% text zoom, keep document-width overflow at zero; use internal timeline/pitch scrolling where needed.
+
+## Required UI validation
+
+Run `npm run test:ui` after populating real match data. It builds the current source and tests every moment at 1440×900, 1024×768, 390×844, 320×844, and 200% text zoom.
+
+The generated room is not complete unless the validator confirms:
+
+- every visible DOM and canvas font is at least 14px;
+- normal text contrast is at least 4.5:1 and large text contrast is at least 3:1;
+- interactive targets are at least 44×44px;
+- timeline rows do not overlap or clip;
+- localized content does not create document-level horizontal overflow;
+- the pitch retains a readable landscape ratio;
+- all generated screenshots have been reviewed against the approved desktop, narrow-desktop, and mobile baselines.
+
+Test the actual generated English or Chinese content, not only the bundled demo. Long player names, translated concepts, phase names, evidence links, and source names must all survive the same checks.
 
 ## Allowed changes
 

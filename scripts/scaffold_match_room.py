@@ -231,7 +231,11 @@ def main() -> int:
             return 2
         shutil.rmtree(output)
 
-    shutil.copytree(template, output)
+    shutil.copytree(
+        template,
+        output,
+        ignore=shutil.ignore_patterns("node_modules", "dist", "test-results"),
+    )
     target = output / "src" / "match-data.json"
     if args.data:
         source = args.data.resolve()
@@ -253,7 +257,7 @@ def main() -> int:
     print(f"Scaffolded Match Room at {output}")
     print(f"Locale: {args.locale}")
     print(f"Key plays: {data['keyPlaySelection']['included']} selected from the video")
-    print("Next: replace src/match-data.json, validate, npm install, and npm run build")
+    print("Next: replace src/match-data.json, validate, npm install, and npm run test:ui")
     return 0
 
 

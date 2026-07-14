@@ -47,7 +47,7 @@
     },
     {
       "id": "demo-concept",
-      "name": "Demo coaching reference",
+      "name": "国际足球教练与战术术语教学参考资料",
       "url": "https://example.com/demo-concept",
       "language": "en",
       "classification": "general-knowledge",
@@ -1511,7 +1511,7 @@
       "id": "counterpress",
       "group": "play",
       "time": "88′",
-      "short": "丢球后，最近的球员立即施压",
+      "short": "在内侧通道丢失球权后，距离最近的三名球员立即向接球者施压",
       "title": "即时反抢封住对手的第一条出球线路",
       "sourceIds": [
         "demo-report",

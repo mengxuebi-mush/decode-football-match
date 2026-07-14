@@ -99,10 +99,12 @@ Run:
 ```bash
 node <skill-dir>/scripts/validate_match_data.mjs <output-dir>/src/match-data.json
 npm install
-npm run build
+npm run test:ui
 ```
 
-Resolve every validation error. Also inspect the rendered desktop and mobile layouts against `assets/visual-baselines/`. Verify that selecting a tactical play automatically starts its three-phase sequence, manual phase selection interrupts it, replay restarts from phase one, playback stops after the final interpolation, reduced-motion fallback works, internal scrolling works, and URL state such as `?moment=two-v-one&phase=decision` remains addressable without forced autoplay.
+`npm run test:ui` builds the current source, selects every moment, and tests desktop, narrow-desktop, mobile, compact-mobile, and 200% text-zoom layouts. Resolve every validation error; do not open or deliver a room that fails. The validator enforces a 14px minimum for visible DOM and canvas text, readable contrast, 44px targets, non-overlapping timeline content, document overflow protection, and a legible pitch ratio.
+
+Inspect the generated screenshots in `<output-dir>/test-results/` against `assets/visual-baselines/desktop.png`, `narrow-desktop.png`, and `mobile.png`. Check the actual localized content, especially long source names, moment titles, concepts, player labels, and phase names. Verify that selecting a tactical play automatically starts its three-phase sequence, manual phase selection interrupts it, replay restarts from phase one, playback stops after the final interpolation, reduced-motion fallback works, internal timeline and pitch scrolling work, and URL state such as `?moment=two-v-one&phase=decision` remains addressable without forced autoplay.
 
 ### 8. Open the direct preview
 
@@ -125,5 +127,6 @@ Finish only when:
 - selecting any tactical play automatically plays all three phases with continuous player motion;
 - every concept has definition, watch cue, dilemma, and transfer cue;
 - both validation and production build pass;
+- the rendered UI passes `npm run test:ui` for every moment, including the 14px type floor, contrast, 44px targets, overlap, overflow, pitch-ratio, and 200% zoom checks;
 - desktop and mobile preserve the Match Room UI contract;
 - the direct preview opens without Lavish or embedded chat.

@@ -39,9 +39,12 @@ function lerpPlayers(from = [], to = [], progress) {
 
 function Pitch({ moment, phaseIndex, transition, copy }) {
   const canvasRef = useRef(null);
+  const drawStateRef = useRef(null);
   const phase = moment.phases[phaseIndex];
   const prior = moment.phases[Math.max(0, phaseIndex - 1)] ?? phase;
   const players = lerpPlayers(prior.players, phase.players, transition);
+  const descriptionId = `pitch-description-${moment.id}-${phase.id}`;
+  drawStateRef.current = { players, phase };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -53,16 +56,22 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
       canvas.height = Math.max(1, Math.floor(height * ratio));
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      draw(canvas, ratio, players, phase);
+      draw(canvas, ratio, drawStateRef.current.players, drawStateRef.current.phase);
     };
     resize();
     const observer = new ResizeObserver(resize);
     observer.observe(frame);
+    document.fonts?.ready.then(resize);
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    draw(canvas, window.devicePixelRatio || 1, players, phase);
   }, [players, phase]);
 
   return (
-    <div className="pitch-frame">
+    <div className="pitch-shell">
       <div className="legend" aria-label={moment.legendSummary}>
         <span><i className="england" />{matchData.match.homeTeam}</span>
         <span><i className="norway" />{matchData.match.awayTeam}</span>
@@ -70,12 +79,15 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
         <span>{copy.contextPlayers}</span>
         <span className="player-key">{moment.legendSummary}</span>
       </div>
-      <canvas className="pitch" ref={canvasRef} aria-label={`${moment.title}: ${phase.label}`} />
-      <div className="pitch-caption">
-        <span>{phase.label}</span>
-        <p>{phase.note}</p>
+      <div className="pitch-frame">
+        <canvas id="pitch-analysis" className="pitch" ref={canvasRef} role="img" aria-label={`${moment.title}: ${phase.label}`} aria-describedby={descriptionId} />
+        <p className="sr-only" id={descriptionId}>{phase.note} {phase.players.map((player) => `${player.number} ${player.name}`).join(", ")}.</p>
+        <div className="pitch-caption">
+          <span>{phase.label}</span>
+          <p>{phase.note}</p>
+        </div>
+        <small className="teaching-label">{copy.reconstruction}</small>
       </div>
-      <small className="teaching-label">{copy.reconstruction}</small>
     </div>
   );
 }
@@ -112,7 +124,7 @@ function draw(canvas, ratio, players, phase) {
     ctx.beginPath(); ctx.arc(px(zone.x), py(zone.y), fieldW * zone.radius / 100, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(166,204,112,.12)"; ctx.fill();
     ctx.setLineDash([5, 5]); ctx.strokeStyle = "rgba(166,204,112,.48)"; ctx.stroke(); ctx.setLineDash([]);
-    ctx.fillStyle = "rgba(182,205,159,.82)"; ctx.font = "11px sans-serif"; ctx.textAlign = "center";
+    ctx.fillStyle = "#c8d9bb"; ctx.font = '14px "Atkinson Hyperlegible"'; ctx.textAlign = "center";
     ctx.fillText(zone.label, px(zone.x), py(zone.y) + fieldW * zone.radius / 100 + 15);
   });
   (phase.lines ?? []).forEach((line) => {
@@ -120,7 +132,11 @@ function draw(canvas, ratio, players, phase) {
     ctx.setLineDash([4, 5]); ctx.strokeStyle = line.team === "home" ? "rgba(235,236,226,.42)" : "rgba(232,94,79,.48)"; ctx.stroke(); ctx.setLineDash([]);
   });
   (phase.arrows ?? []).forEach((arrow) => drawArrow(ctx, px(arrow.from[0]), py(arrow.from[1]), px(arrow.to[0]), py(arrow.to[1]), arrow.type));
-  players.forEach((player) => drawPlayer(ctx, px(player.x), py(player.y), player));
+  const plottedPlayers = players.map((player) => ({ ...player, plotX: px(player.x), plotY: py(player.y) }));
+  plottedPlayers.forEach((player) => drawPlayerMarker(ctx, player.plotX, player.plotY, player));
+  const labelBoxes = [];
+  const fieldBounds = { left, top, right: left + fieldW, bottom: top + fieldH };
+  plottedPlayers.forEach((player) => drawPlayerLabel(ctx, player, plottedPlayers, labelBoxes, fieldBounds));
 }
 
 function drawBox(ctx, px, py, edge, mirror) {
@@ -138,14 +154,58 @@ function drawArrow(ctx, x1, y1, x2, y2, type) {
   ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x2 - size * Math.cos(angle - .55), y2 - size * Math.sin(angle - .55)); ctx.lineTo(x2 - size * Math.cos(angle + .55), y2 - size * Math.sin(angle + .55)); ctx.closePath(); ctx.fillStyle = color; ctx.fill();
 }
 
-function drawPlayer(ctx, x, y, player) {
+function drawPlayerMarker(ctx, x, y, player) {
   const context = player.role === "context";
-  ctx.save(); ctx.globalAlpha = context ? .48 : 1;
-  ctx.beginPath(); ctx.arc(x, y, 13, 0, Math.PI * 2);
-  ctx.fillStyle = player.team === "home" ? "#eeece3" : "#b84138"; ctx.fill();
-  ctx.strokeStyle = player.team === "home" ? "#b8bcb4" : "#ef8b80"; ctx.lineWidth = 1.3; ctx.stroke();
-  ctx.fillStyle = player.team === "home" ? "#172017" : "#fff3eb"; ctx.font = "600 10px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(player.number, x, y);
-  ctx.fillStyle = "#e8e7df"; ctx.font = "10px sans-serif"; ctx.textBaseline = "top"; ctx.fillText(player.name, x, y + 17); ctx.restore();
+  ctx.save();
+  ctx.beginPath(); ctx.arc(x, y, 16, 0, Math.PI * 2);
+  ctx.fillStyle = player.team === "home" ? (context ? "#aeb8ae" : "#f0eee6") : (context ? "#8e4b46" : "#b84138"); ctx.fill();
+  ctx.strokeStyle = player.team === "home" ? "#d7ded5" : "#f09a90"; ctx.lineWidth = context ? 1.5 : 2; ctx.stroke();
+  ctx.fillStyle = player.team === "home" ? "#132017" : "#fff5ed";
+  ctx.font = '700 14px "Atkinson Hyperlegible"'; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(player.number, x, y);
+  ctx.restore();
+}
+
+function boxesOverlap(a, b, gap = 3) {
+  return a.left < b.right + gap && a.right + gap > b.left && a.top < b.bottom + gap && a.bottom + gap > b.top;
+}
+
+function drawPlayerLabel(ctx, player, players, placed, bounds) {
+  ctx.save();
+  ctx.font = '700 14px "Atkinson Hyperlegible"';
+  ctx.textBaseline = "middle";
+  const paddingX = 5;
+  const height = 22;
+  const width = Math.ceil(ctx.measureText(player.name).width) + paddingX * 2;
+  const { plotX: x, plotY: y } = player;
+  const candidates = [];
+  for (const radius of [20, 38, 56, 74]) {
+    for (const [dx, dy] of [[0, 1], [0, -1], [1, 0], [-1, 0], [0.72, 0.72], [-0.72, 0.72], [0.72, -0.72], [-0.72, -0.72]]) {
+      const centerX = x + dx * radius;
+      const centerY = y + dy * radius;
+      const left = centerX - width / 2;
+      const top = centerY - height / 2;
+      candidates.push({ left, top, right: left + width, bottom: top + height });
+    }
+  }
+  const obstacles = players.filter((item) => item.id !== player.id).map((item) => ({ left: item.plotX - 18, top: item.plotY - 18, right: item.plotX + 18, bottom: item.plotY + 18 }));
+  const fits = (box) => box.left >= bounds.left && box.right <= bounds.right && box.top >= bounds.top && box.bottom <= bounds.bottom && !placed.some((other) => boxesOverlap(box, other)) && !obstacles.some((other) => boxesOverlap(box, other));
+  const box = candidates.find(fits) ?? candidates.map((candidate) => ({
+    ...candidate,
+    left: clamp(candidate.left, bounds.left, bounds.right - width),
+    right: clamp(candidate.left, bounds.left, bounds.right - width) + width,
+    top: clamp(candidate.top, bounds.top, bounds.bottom - height),
+    bottom: clamp(candidate.top, bounds.top, bounds.bottom - height) + height
+  })).sort((a, b) => placed.filter((other) => boxesOverlap(a, other)).length - placed.filter((other) => boxesOverlap(b, other)).length)[0];
+  const labelX = box.left + width / 2;
+  const labelY = box.top + height / 2;
+  if (Math.hypot(labelX - x, labelY - y) > 30) {
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(labelX, labelY); ctx.strokeStyle = "rgba(223,231,221,.55)"; ctx.lineWidth = 1; ctx.stroke();
+  }
+  ctx.fillStyle = "rgba(7,16,10,.88)"; ctx.fillRect(box.left, box.top, width, height);
+  ctx.fillStyle = player.role === "context" ? "#c3cec2" : "#f0f2eb";
+  ctx.textAlign = "center"; ctx.fillText(player.name, labelX, labelY);
+  placed.push(box);
+  ctx.restore();
 }
 
 export function App() {
@@ -211,12 +271,12 @@ export function App() {
           {groups.map((group) => { const items = matchData.moments.map((item, index) => ({ item, index })).filter(({ item }) => item.group === group); return (
             <section className={`timeline-group ${group}`} key={group}>
               <div className="timeline-group-head"><p className="section-label">{group === "context" ? copy.context : copy.plays}</p><span>{items.length}</span></div>
-              <div className="timeline-items">{items.map(({ item, index }) => <button className={`moment-card ${index === momentIndex ? "active" : ""}`} key={item.id} onClick={() => chooseMoment(index)}><i className="moment-dot" /><span className="moment-time">{item.time}</span><strong>{item.short}</strong>{item.concept && <span className="tactic-chip">{item.concept.name}</span>}<span className="evidence-chip">{item.evidenceLabel}</span></button>)}</div>
+              <div className="timeline-items">{items.map(({ item, index }) => <button className={`moment-card ${index === momentIndex ? "active" : ""}`} data-moment-id={item.id} aria-current={index === momentIndex ? "true" : undefined} key={item.id} onClick={() => chooseMoment(index)}><i className="moment-dot" /><span className="moment-time">{item.time}</span><strong>{item.short}</strong>{item.concept && <span className="tactic-chip">{item.concept.name}</span>}</button>)}</div>
             </section>
           ); })}
         </nav>
         <section className="analysis-panel">
-          <div className="analysis-head"><div><p className="section-label">{moment.evidenceLabel} · {moment.time}</p><h1>{moment.title}</h1><div className="evidence-links">{moment.sourceIds.map((id) => { const source = sourceMap.get(id); return source && <a href={source.url} target="_blank" rel="noreferrer" key={id}>{source.name} ↗</a>; })}</div></div><div className="phase-controls"><div className="phase-tabs" role="tablist" aria-busy={playing}>{moment.phases.map((phase, index) => <button role="tab" aria-selected={phaseIndex === index} key={phase.id} onClick={() => choosePhase(index)}>{phase.label}</button>)}</div>{moment.phases.length > 1 && <button className={`replay-button ${playing ? "playing" : ""}`} onClick={replay}>{playing ? copy.replaying : copy.replay}</button>}</div></div>
+          <div className="analysis-head"><div><p className="section-label">{moment.evidenceLabel} · {moment.time}</p><h1>{moment.title}</h1><div className="evidence-links">{moment.sourceIds.map((id) => { const source = sourceMap.get(id); return source && <a href={source.url} target="_blank" rel="noreferrer" key={id}>{source.name} ↗</a>; })}</div></div><div className="phase-controls"><div className="phase-tabs" role="tablist" aria-busy={playing}>{moment.phases.map((phase, index) => <button role="tab" aria-controls="pitch-analysis" aria-selected={phaseIndex === index} key={phase.id} onClick={() => choosePhase(index)}>{phase.label}</button>)}</div>{moment.phases.length > 1 && <button className={`replay-button ${playing ? "playing" : ""}`} onClick={replay}>{playing ? copy.replaying : copy.replay}</button>}</div></div>
           <Pitch moment={moment} phaseIndex={phaseIndex} transition={transition} copy={copy} />
           {moment.concept && <section className="concept open" aria-label={moment.concept.name}><div className="concept-summary"><span className="concept-mark">↗</span><div className="concept-copy"><div className="concept-title"><strong>{moment.concept.name}</strong><em>{moment.concept.canonicalTerm}</em></div><span>{moment.concept.definition}</span><span className="concept-cue"><b>{copy.watch}</b>{moment.concept.watchCue}</span></div></div><div className="concept-details"><div className="learning-guide"><section><span>{copy.watch}</span><p>{moment.concept.watchCue}</p></section><section><span>{copy.dilemma}</span><p>{moment.concept.dilemma}</p></section><section><span>{copy.transfer}</span><p>{moment.concept.transferCue}</p></section></div></div></section>}
         </section>

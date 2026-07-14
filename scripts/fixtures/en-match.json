@@ -47,7 +47,7 @@
     },
     {
       "id": "demo-concept",
-      "name": "Demo coaching reference",
+      "name": "International football coaching and tactical terminology reference",
       "url": "https://example.com/demo-concept",
       "language": "en",
       "classification": "general-knowledge",
@@ -1511,7 +1511,7 @@
       "id": "counterpress",
       "group": "play",
       "time": "88′",
-      "short": "The nearest players press after losing the ball",
+      "short": "The three nearest players press immediately after losing the ball in the inside channel",
       "title": "An immediate counterpress closes the opponent's first escape",
       "sourceIds": [
         "demo-report",

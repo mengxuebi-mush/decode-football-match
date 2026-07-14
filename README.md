@@ -99,6 +99,8 @@ Generated rooms retain the included interface rather than redesigning it for eac
 - Three replay phases with continuous interpolation instead of slide-like cuts
 - Permanently expanded tactical-learning card
 - One-viewport desktop layout with internal scrolling and responsive mobile adaptation
+- Readable typography with no visible text below 14px, accessible contrast, and 44px interaction targets
+- Collision-aware pitch labels and an internally scrollable full-width pitch on narrow phones
 
 Content may change for each match; the visual hierarchy, pitch grammar, motion behavior, and interaction model should not.
 
@@ -130,5 +132,7 @@ Scaffold the bundled template for local inspection with:
 python3 scripts/scaffold_match_room.py /tmp/football-companion-demo --locale en
 cd /tmp/football-companion-demo
 npm install
-npm run build
+npm run test:ui
 ```
+
+The UI test builds the room and checks every moment at desktop, narrow desktop, mobile, compact mobile, and 200% text zoom. It fails if text is too small, contrast is too low, controls are undersized, timeline copy overlaps, the page overflows horizontally, or the pitch becomes unreadably distorted.

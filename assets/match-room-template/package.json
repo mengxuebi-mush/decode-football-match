@@ -6,13 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:ui": "npm run build && node scripts/validate-ui.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "5.0.4",
-    "vite": "6.4.2",
+    "vite": "6.4.3",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "playwright": "1.60.0"
+  }
 }
