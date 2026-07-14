@@ -1,0 +1,1492 @@
+{
+  "schemaVersion": 1,
+  "locale": "en",
+  "match": {
+    "id": "north-city-south-united-demo",
+    "homeTeam": "North City",
+    "awayTeam": "South United",
+    "score": "2–1",
+    "competition": "Demonstration match",
+    "subtitle": "Replace this teaching fixture with sourced match data",
+    "highlightUrl": "https://example.com/demo-highlight",
+    "sourceDisclosure": "Demo content only — replace before publishing."
+  },
+  "keyPlaySelection": {
+    "target": 4,
+    "included": 4,
+    "strategy": "auto",
+    "limitationNote": ""
+  },
+  "sources": [
+    {
+      "id": "demo-report",
+      "name": "Demo match report",
+      "url": "https://example.com/demo-report",
+      "language": "en",
+      "classification": "reported-fact",
+      "supports": "Placeholder event sequence for template validation only."
+    },
+    {
+      "id": "demo-concept",
+      "name": "Demo coaching reference",
+      "url": "https://example.com/demo-concept",
+      "language": "en",
+      "classification": "general-knowledge",
+      "supports": "Placeholder definition of a local overload."
+    }
+  ],
+  "moments": [
+    {
+      "id": "base-shape",
+      "group": "context",
+      "time": "Kick-off",
+      "short": "Both base shapes",
+      "title": "The two base shapes share one pitch",
+      "sourceIds": [
+        "demo-report"
+      ],
+      "evidenceLabel": "Demo context",
+      "legendSummary": "Home 4–2–3–1 · Away 4–3–3",
+      "phases": [
+        {
+          "id": "shape",
+          "label": "Base shape",
+          "note": "Each team occupies its own half; dashed lines show units, not passes.",
+          "players": [
+            {
+              "id": "h-1",
+              "x": 8,
+              "y": 50,
+              "team": "home",
+              "number": "1",
+              "name": "Keeper",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 20,
+              "y": 18,
+              "team": "home",
+              "number": "2",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-5",
+              "x": 20,
+              "y": 40,
+              "team": "home",
+              "number": "5",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 20,
+              "y": 60,
+              "team": "home",
+              "number": "6",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-3",
+              "x": 20,
+              "y": 82,
+              "team": "home",
+              "number": "3",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 32,
+              "y": 38,
+              "team": "home",
+              "number": "8",
+              "name": "Pivot",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 32,
+              "y": 62,
+              "team": "home",
+              "number": "4",
+              "name": "Pivot",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 42,
+              "y": 18,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 42,
+              "y": 50,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 42,
+              "y": 82,
+              "team": "home",
+              "number": "7",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 48,
+              "y": 50,
+              "team": "home",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            },
+            {
+              "id": "a-1",
+              "x": 92,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "Keeper",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 80,
+              "y": 18,
+              "team": "away",
+              "number": "2",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 80,
+              "y": 40,
+              "team": "away",
+              "number": "5",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 80,
+              "y": 60,
+              "team": "away",
+              "number": "6",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 80,
+              "y": 82,
+              "team": "away",
+              "number": "3",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 67,
+              "y": 30,
+              "team": "away",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 67,
+              "y": 50,
+              "team": "away",
+              "number": "4",
+              "name": "Pivot",
+              "role": "actor"
+            },
+            {
+              "id": "a-10",
+              "x": 67,
+              "y": 70,
+              "team": "away",
+              "number": "10",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "a-11",
+              "x": 54,
+              "y": 18,
+              "team": "away",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-9",
+              "x": 54,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            },
+            {
+              "id": "a-7",
+              "x": 54,
+              "y": 82,
+              "team": "away",
+              "number": "7",
+              "name": "Winger",
+              "role": "actor"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                20,
+                18
+              ],
+              "to": [
+                20,
+                82
+              ],
+              "team": "home"
+            },
+            {
+              "from": [
+                32,
+                38
+              ],
+              "to": [
+                32,
+                62
+              ],
+              "team": "home"
+            },
+            {
+              "from": [
+                42,
+                18
+              ],
+              "to": [
+                42,
+                82
+              ],
+              "team": "home"
+            },
+            {
+              "from": [
+                80,
+                18
+              ],
+              "to": [
+                80,
+                82
+              ],
+              "team": "away"
+            },
+            {
+              "from": [
+                67,
+                30
+              ],
+              "to": [
+                67,
+                70
+              ],
+              "team": "away"
+            },
+            {
+              "from": [
+                54,
+                18
+              ],
+              "to": [
+                54,
+                82
+              ],
+              "team": "away"
+            }
+          ],
+          "arrows": [],
+          "zones": []
+        }
+      ]
+    },
+    {
+      "id": "two-v-one",
+      "group": "play",
+      "time": "44′",
+      "short": "A wide 2v1 develops",
+      "title": "The ball carrier forces the last defender to choose",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "Demo sequence + football concept",
+      "legendSummary": "7 Runner + 9 Forward · one covering defender",
+      "concept": {
+        "name": "Local overload",
+        "canonicalTerm": "Local overload · 2v1",
+        "definition": "The attack creates one extra player near the ball, so one defender cannot cover every option.",
+        "watchCue": "Count players near the ball before following the pass.",
+        "dilemma": "Step to the carrier and expose the runner, or protect the pass and concede ground.",
+        "transferCue": "Look for the same choice in wide 3v2 and 4v3 attacks."
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "Setup",
+          "note": "Two attackers break toward one covering defender.",
+          "players": [
+            {
+              "id": "h-7",
+              "x": 54,
+              "y": 68,
+              "team": "home",
+              "number": "7",
+              "name": "Runner",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 57,
+              "y": 32,
+              "team": "home",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 69,
+              "y": 50,
+              "team": "away",
+              "number": "5",
+              "name": "Cover",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 50,
+              "y": 82,
+              "team": "away",
+              "number": "4",
+              "name": "Recovering",
+              "role": "context"
+            },
+            {
+              "id": "a-6",
+              "x": 49,
+              "y": 18,
+              "team": "away",
+              "number": "6",
+              "name": "Recovering",
+              "role": "context"
+            },
+            {
+              "id": "a-1",
+              "x": 93,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "Keeper",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                54,
+                68
+              ],
+              "to": [
+                69,
+                62
+              ],
+              "type": "carry",
+              "label": "Carry"
+            },
+            {
+              "from": [
+                57,
+                32
+              ],
+              "to": [
+                73,
+                34
+              ],
+              "type": "run",
+              "label": "Support run"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 67,
+              "y": 50,
+              "radius": 14,
+              "label": "2v1 area"
+            }
+          ]
+        },
+        {
+          "id": "decision",
+          "label": "Decision",
+          "note": "The carrier approaches the defender and opens the passing lane.",
+          "players": [
+            {
+              "id": "h-7",
+              "x": 68,
+              "y": 62,
+              "team": "home",
+              "number": "7",
+              "name": "Runner",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 73,
+              "y": 33,
+              "team": "home",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 77,
+              "y": 51,
+              "team": "away",
+              "number": "5",
+              "name": "Cover",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 62,
+              "y": 76,
+              "team": "away",
+              "number": "4",
+              "name": "Recovering",
+              "role": "context"
+            },
+            {
+              "id": "a-6",
+              "x": 61,
+              "y": 24,
+              "team": "away",
+              "number": "6",
+              "name": "Recovering",
+              "role": "context"
+            },
+            {
+              "id": "a-1",
+              "x": 93,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "Keeper",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                68,
+                62
+              ],
+              "to": [
+                80,
+                58
+              ],
+              "type": "carry",
+              "label": "Commit defender"
+            },
+            {
+              "from": [
+                68,
+                62
+              ],
+              "to": [
+                73,
+                33
+              ],
+              "type": "option",
+              "label": "Pass option"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 76,
+              "y": 34,
+              "radius": 9,
+              "label": "Passing lane"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome",
+          "note": "The defender has committed; the free player receives beyond the cover.",
+          "players": [
+            {
+              "id": "h-7",
+              "x": 78,
+              "y": 59,
+              "team": "home",
+              "number": "7",
+              "name": "Runner",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 84,
+              "y": 34,
+              "team": "home",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 80,
+              "y": 56,
+              "team": "away",
+              "number": "5",
+              "name": "Cover",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 72,
+              "y": 70,
+              "team": "away",
+              "number": "4",
+              "name": "Recovering",
+              "role": "context"
+            },
+            {
+              "id": "a-6",
+              "x": 70,
+              "y": 28,
+              "team": "away",
+              "number": "6",
+              "name": "Recovering",
+              "role": "context"
+            },
+            {
+              "id": "a-1",
+              "x": 93,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "Keeper",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                78,
+                59
+              ],
+              "to": [
+                84,
+                34
+              ],
+              "type": "pass",
+              "label": "Release"
+            },
+            {
+              "from": [
+                84,
+                34
+              ],
+              "to": [
+                94,
+                42
+              ],
+              "type": "run",
+              "label": "Attack goal"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 86,
+              "y": 35,
+              "radius": 9,
+              "label": "Free player"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decoy-run",
+      "group": "play",
+      "time": "52′",
+      "short": "A decoy run opens the inside lane",
+      "title": "The wide runner moves a defender without receiving the ball",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "Demo sequence + football concept",
+      "legendSummary": "11 Winger · 10 Playmaker · 2 Full-back",
+      "concept": {
+        "name": "Decoy run",
+        "canonicalTerm": "Decoy run",
+        "definition": "A runner moves a defender away from the space a teammate wants to use.",
+        "watchCue": "Watch the defender, not only the ball: who follows the runner?",
+        "dilemma": "Follow the runner and open the inside lane, or hold position and leave the runner free.",
+        "transferCue": "Notice runs that create the chance even when the runner never touches the ball."
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "Setup",
+          "note": "The winger receives wide with an overlapping runner behind.",
+          "players": [
+            {
+              "id": "h-11",
+              "x": 58,
+              "y": 24,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 48,
+              "y": 18,
+              "team": "home",
+              "number": "2",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 57,
+              "y": 50,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 69,
+              "y": 24,
+              "team": "away",
+              "number": "3",
+              "name": "Defender",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 74,
+              "y": 48,
+              "team": "away",
+              "number": "6",
+              "name": "Cover",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                48,
+                18
+              ],
+              "to": [
+                68,
+                12
+              ],
+              "type": "run",
+              "label": "Decoy run"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                69,
+                24
+              ],
+              "to": [
+                74,
+                48
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 68,
+              "y": 42,
+              "radius": 10,
+              "label": "Inside lane"
+            }
+          ]
+        },
+        {
+          "id": "trigger",
+          "label": "Trigger",
+          "note": "The full-back runs outside and pulls the nearest defender wider.",
+          "players": [
+            {
+              "id": "h-11",
+              "x": 64,
+              "y": 26,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 65,
+              "y": 12,
+              "team": "home",
+              "number": "2",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 64,
+              "y": 49,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 72,
+              "y": 18,
+              "team": "away",
+              "number": "3",
+              "name": "Defender",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 77,
+              "y": 49,
+              "team": "away",
+              "number": "6",
+              "name": "Cover",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                64,
+                26
+              ],
+              "to": [
+                72,
+                43
+              ],
+              "type": "carry",
+              "label": "Attack inside"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                72,
+                18
+              ],
+              "to": [
+                77,
+                49
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 72,
+              "y": 41,
+              "radius": 10,
+              "label": "Opened space"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome",
+          "note": "The winger drives inside while the decoy runner stays outside.",
+          "players": [
+            {
+              "id": "h-11",
+              "x": 75,
+              "y": 42,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 78,
+              "y": 12,
+              "team": "home",
+              "number": "2",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 75,
+              "y": 58,
+              "team": "home",
+              "number": "10",
+              "name": "Playmaker",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 80,
+              "y": 19,
+              "team": "away",
+              "number": "3",
+              "name": "Defender",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 83,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "Cover",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                75,
+                42
+              ],
+              "to": [
+                89,
+                48
+              ],
+              "type": "pass",
+              "label": "Final pass"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                80,
+                19
+              ],
+              "to": [
+                83,
+                50
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 82,
+              "y": 43,
+              "radius": 9,
+              "label": "Inside lane"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "side-overload",
+      "group": "play",
+      "time": "67′",
+      "short": "Three attackers overload the left",
+      "title": "A side overload creates a free third player",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "Demo sequence + football concept",
+      "legendSummary": "3 attackers · 2 defenders · left channel",
+      "concept": {
+        "name": "Side overload",
+        "canonicalTerm": "Side overload · 3v2",
+        "definition": "The attack concentrates an extra player on one side to create a free passing option.",
+        "watchCue": "Count players inside one vertical channel before following the ball.",
+        "dilemma": "Collapse toward the ball and expose the far side, or stay balanced and concede a local free player.",
+        "transferCue": "Look for a triangle of attackers surrounding two defenders near one touchline."
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "Setup",
+          "note": "Three attackers form a triangle against two defenders on the left.",
+          "players": [
+            {
+              "id": "h-3",
+              "x": 54,
+              "y": 20,
+              "team": "home",
+              "number": "3",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 58,
+              "y": 37,
+              "team": "home",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 66,
+              "y": 14,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 70,
+              "y": 22,
+              "team": "away",
+              "number": "2",
+              "name": "Defender",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 69,
+              "y": 39,
+              "team": "away",
+              "number": "8",
+              "name": "Cover",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                54,
+                20
+              ],
+              "to": [
+                58,
+                37
+              ],
+              "type": "pass",
+              "label": "First pass"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                70,
+                22
+              ],
+              "to": [
+                69,
+                39
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 62,
+              "y": 25,
+              "radius": 12,
+              "label": "3v2"
+            }
+          ]
+        },
+        {
+          "id": "decision",
+          "label": "Decision",
+          "note": "The midfielder draws both defenders and finds the third player.",
+          "players": [
+            {
+              "id": "h-3",
+              "x": 62,
+              "y": 19,
+              "team": "home",
+              "number": "3",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 66,
+              "y": 35,
+              "team": "home",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 73,
+              "y": 13,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 73,
+              "y": 23,
+              "team": "away",
+              "number": "2",
+              "name": "Defender",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 72,
+              "y": 37,
+              "team": "away",
+              "number": "8",
+              "name": "Cover",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                66,
+                35
+              ],
+              "to": [
+                73,
+                13
+              ],
+              "type": "pass",
+              "label": "Third player"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                73,
+                23
+              ],
+              "to": [
+                72,
+                37
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 75,
+              "y": 13,
+              "radius": 8,
+              "label": "Free player"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome",
+          "note": "The free winger receives beyond the two defenders.",
+          "players": [
+            {
+              "id": "h-3",
+              "x": 70,
+              "y": 20,
+              "team": "home",
+              "number": "3",
+              "name": "Full-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 74,
+              "y": 38,
+              "team": "home",
+              "number": "8",
+              "name": "Midfielder",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 84,
+              "y": 14,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 79,
+              "y": 25,
+              "team": "away",
+              "number": "2",
+              "name": "Defender",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 78,
+              "y": 41,
+              "team": "away",
+              "number": "8",
+              "name": "Cover",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                84,
+                14
+              ],
+              "to": [
+                92,
+                28
+              ],
+              "type": "carry",
+              "label": "Attack box"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                79,
+                25
+              ],
+              "to": [
+                78,
+                41
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 86,
+              "y": 20,
+              "radius": 9,
+              "label": "Free player"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rest-defense",
+      "group": "play",
+      "time": "81′",
+      "short": "The back line protects the counter",
+      "title": "Rest defense stays connected behind the attack",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "Demo sequence + football concept",
+      "legendSummary": "attacking support · two defenders + pivot",
+      "concept": {
+        "name": "Rest defense",
+        "canonicalTerm": "Rest defense",
+        "definition": "Players behind the attack stay positioned to control a clearance or counterattack.",
+        "watchCue": "When the ball enters the box, look backward at the players protecting behind it.",
+        "dilemma": "Add one more attacker to the box, or keep enough cover to stop the counter.",
+        "transferCue": "Pause after a cross and count how many players remain connected behind the ball."
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "Setup",
+          "note": "The attack advances while two centre-backs and a pivot hold behind it.",
+          "players": [
+            {
+              "id": "h-5",
+              "x": 48,
+              "y": 38,
+              "team": "home",
+              "number": "5",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 48,
+              "y": 62,
+              "team": "home",
+              "number": "6",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 58,
+              "y": 50,
+              "team": "home",
+              "number": "4",
+              "name": "Pivot",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 75,
+              "y": 22,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "context"
+            },
+            {
+              "id": "a-9",
+              "x": 56,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                75,
+                22
+              ],
+              "to": [
+                87,
+                32
+              ],
+              "type": "carry",
+              "label": "Attack"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                48,
+                38
+              ],
+              "to": [
+                48,
+                62
+              ],
+              "team": "home"
+            }
+          ],
+          "zones": [
+            {
+              "x": 52,
+              "y": 50,
+              "radius": 13,
+              "label": "Rest defense"
+            }
+          ]
+        },
+        {
+          "id": "turnover",
+          "label": "Turnover",
+          "note": "The cross is cleared toward the opposing forward.",
+          "players": [
+            {
+              "id": "h-5",
+              "x": 53,
+              "y": 38,
+              "team": "home",
+              "number": "5",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 53,
+              "y": 62,
+              "team": "home",
+              "number": "6",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 61,
+              "y": 50,
+              "team": "home",
+              "number": "4",
+              "name": "Pivot",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 82,
+              "y": 24,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "context"
+            },
+            {
+              "id": "a-9",
+              "x": 62,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                84,
+                30
+              ],
+              "to": [
+                62,
+                50
+              ],
+              "type": "pass",
+              "label": "Clearance"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                53,
+                38
+              ],
+              "to": [
+                53,
+                62
+              ],
+              "team": "home"
+            }
+          ],
+          "zones": [
+            {
+              "x": 57,
+              "y": 50,
+              "radius": 12,
+              "label": "Cover triangle"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "Outcome",
+          "note": "The pivot contests the clearance while the centre-backs protect depth.",
+          "players": [
+            {
+              "id": "h-5",
+              "x": 58,
+              "y": 38,
+              "team": "home",
+              "number": "5",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 58,
+              "y": 62,
+              "team": "home",
+              "number": "6",
+              "name": "Centre-back",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 66,
+              "y": 50,
+              "team": "home",
+              "number": "4",
+              "name": "Pivot",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 86,
+              "y": 26,
+              "team": "home",
+              "number": "11",
+              "name": "Winger",
+              "role": "context"
+            },
+            {
+              "id": "a-9",
+              "x": 65,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "Forward",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                66,
+                50
+              ],
+              "to": [
+                70,
+                50
+              ],
+              "type": "press",
+              "label": "Contest"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                58,
+                38
+              ],
+              "to": [
+                58,
+                62
+              ],
+              "team": "home"
+            }
+          ],
+          "zones": [
+            {
+              "x": 62,
+              "y": 50,
+              "radius": 11,
+              "label": "Counter controlled"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

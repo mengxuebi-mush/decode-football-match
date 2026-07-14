@@ -1,0 +1,1492 @@
+{
+  "schemaVersion": 1,
+  "locale": "zh-CN",
+  "match": {
+    "id": "north-city-south-united-demo",
+    "homeTeam": "North City",
+    "awayTeam": "South United",
+    "score": "2–1",
+    "competition": "演示比赛",
+    "subtitle": "请用有来源的真实比赛数据替换教学样例",
+    "highlightUrl": "https://example.com/demo-highlight",
+    "sourceDisclosure": "仅为模板演示，发布前必须替换。"
+  },
+  "keyPlaySelection": {
+    "target": 4,
+    "included": 4,
+    "strategy": "auto",
+    "limitationNote": ""
+  },
+  "sources": [
+    {
+      "id": "demo-report",
+      "name": "Demo match report",
+      "url": "https://example.com/demo-report",
+      "language": "en",
+      "classification": "reported-fact",
+      "supports": "Placeholder event sequence for template validation only."
+    },
+    {
+      "id": "demo-concept",
+      "name": "Demo coaching reference",
+      "url": "https://example.com/demo-concept",
+      "language": "en",
+      "classification": "general-knowledge",
+      "supports": "Placeholder definition of a local overload."
+    }
+  ],
+  "moments": [
+    {
+      "id": "base-shape",
+      "group": "context",
+      "time": "开场",
+      "short": "双方基础队形",
+      "title": "双方基础队形放在同一球场",
+      "sourceIds": [
+        "demo-report"
+      ],
+      "evidenceLabel": "演示背景",
+      "legendSummary": "主队 4–2–3–1 · 客队 4–3–3",
+      "phases": [
+        {
+          "id": "shape",
+          "label": "基础队形",
+          "note": "双方各自占据一个半场；虚线表示阵型层级，不是传球路线。",
+          "players": [
+            {
+              "id": "h-1",
+              "x": 8,
+              "y": 50,
+              "team": "home",
+              "number": "1",
+              "name": "门将",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 20,
+              "y": 18,
+              "team": "home",
+              "number": "2",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-5",
+              "x": 20,
+              "y": 40,
+              "team": "home",
+              "number": "5",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 20,
+              "y": 60,
+              "team": "home",
+              "number": "6",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-3",
+              "x": 20,
+              "y": 82,
+              "team": "home",
+              "number": "3",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 32,
+              "y": 38,
+              "team": "home",
+              "number": "8",
+              "name": "后腰",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 32,
+              "y": 62,
+              "team": "home",
+              "number": "4",
+              "name": "后腰",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 42,
+              "y": 18,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 42,
+              "y": 50,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "h-7",
+              "x": 42,
+              "y": 82,
+              "team": "home",
+              "number": "7",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 48,
+              "y": 50,
+              "team": "home",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-1",
+              "x": 92,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "门将",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 80,
+              "y": 18,
+              "team": "away",
+              "number": "2",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 80,
+              "y": 40,
+              "team": "away",
+              "number": "5",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 80,
+              "y": 60,
+              "team": "away",
+              "number": "6",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 80,
+              "y": 82,
+              "team": "away",
+              "number": "3",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 67,
+              "y": 30,
+              "team": "away",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 67,
+              "y": 50,
+              "team": "away",
+              "number": "4",
+              "name": "后腰",
+              "role": "actor"
+            },
+            {
+              "id": "a-10",
+              "x": 67,
+              "y": 70,
+              "team": "away",
+              "number": "10",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "a-11",
+              "x": 54,
+              "y": 18,
+              "team": "away",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-9",
+              "x": 54,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-7",
+              "x": 54,
+              "y": 82,
+              "team": "away",
+              "number": "7",
+              "name": "边锋",
+              "role": "actor"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                20,
+                18
+              ],
+              "to": [
+                20,
+                82
+              ],
+              "team": "home"
+            },
+            {
+              "from": [
+                32,
+                38
+              ],
+              "to": [
+                32,
+                62
+              ],
+              "team": "home"
+            },
+            {
+              "from": [
+                42,
+                18
+              ],
+              "to": [
+                42,
+                82
+              ],
+              "team": "home"
+            },
+            {
+              "from": [
+                80,
+                18
+              ],
+              "to": [
+                80,
+                82
+              ],
+              "team": "away"
+            },
+            {
+              "from": [
+                67,
+                30
+              ],
+              "to": [
+                67,
+                70
+              ],
+              "team": "away"
+            },
+            {
+              "from": [
+                54,
+                18
+              ],
+              "to": [
+                54,
+                82
+              ],
+              "team": "away"
+            }
+          ],
+          "arrows": [],
+          "zones": []
+        }
+      ]
+    },
+    {
+      "id": "two-v-one",
+      "group": "play",
+      "time": "44′",
+      "short": "边路形成二打一",
+      "title": "持球者迫使最后一名防守者做选择",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "演示回合 + 足球概念",
+      "legendSummary": "7号跑动者 + 9号前锋 · 一名补位防守者",
+      "concept": {
+        "name": "局部人数优势",
+        "canonicalTerm": "Local overload · 2v1",
+        "definition": "进攻方在球附近多出一人，让一名防守者无法同时封住全部选择。",
+        "watchCue": "先数球附近的人数，再追随传球。",
+        "dilemma": "扑向持球人会放空跑动者；保护传球线又会让出推进空间。",
+        "transferCue": "以后在边路三打二、四打三时寻找同样的选择。"
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "起势",
+          "note": "两名进攻者冲向一名补位防守者。",
+          "players": [
+            {
+              "id": "h-7",
+              "x": 54,
+              "y": 68,
+              "team": "home",
+              "number": "7",
+              "name": "跑动者",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 57,
+              "y": 32,
+              "team": "home",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 69,
+              "y": 50,
+              "team": "away",
+              "number": "5",
+              "name": "补位者",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 50,
+              "y": 82,
+              "team": "away",
+              "number": "4",
+              "name": "回追者",
+              "role": "context"
+            },
+            {
+              "id": "a-6",
+              "x": 49,
+              "y": 18,
+              "team": "away",
+              "number": "6",
+              "name": "回追者",
+              "role": "context"
+            },
+            {
+              "id": "a-1",
+              "x": 93,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "门将",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                54,
+                68
+              ],
+              "to": [
+                69,
+                62
+              ],
+              "type": "carry",
+              "label": "带球推进"
+            },
+            {
+              "from": [
+                57,
+                32
+              ],
+              "to": [
+                73,
+                34
+              ],
+              "type": "run",
+              "label": "接应跑动"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 67,
+              "y": 50,
+              "radius": 14,
+              "label": "二打一核心区"
+            }
+          ]
+        },
+        {
+          "id": "decision",
+          "label": "抉择",
+          "note": "持球者接近防守者，横传线路随之打开。",
+          "players": [
+            {
+              "id": "h-7",
+              "x": 68,
+              "y": 62,
+              "team": "home",
+              "number": "7",
+              "name": "跑动者",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 73,
+              "y": 33,
+              "team": "home",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 77,
+              "y": 51,
+              "team": "away",
+              "number": "5",
+              "name": "补位者",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 62,
+              "y": 76,
+              "team": "away",
+              "number": "4",
+              "name": "回追者",
+              "role": "context"
+            },
+            {
+              "id": "a-6",
+              "x": 61,
+              "y": 24,
+              "team": "away",
+              "number": "6",
+              "name": "回追者",
+              "role": "context"
+            },
+            {
+              "id": "a-1",
+              "x": 93,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "门将",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                68,
+                62
+              ],
+              "to": [
+                80,
+                58
+              ],
+              "type": "carry",
+              "label": "吸引防守者"
+            },
+            {
+              "from": [
+                68,
+                62
+              ],
+              "to": [
+                73,
+                33
+              ],
+              "type": "option",
+              "label": "传球选择"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 76,
+              "y": 34,
+              "radius": 9,
+              "label": "传球线路"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "结果",
+          "note": "防守者已经做出选择；空位队友在其身后接球。",
+          "players": [
+            {
+              "id": "h-7",
+              "x": 78,
+              "y": 59,
+              "team": "home",
+              "number": "7",
+              "name": "跑动者",
+              "role": "actor"
+            },
+            {
+              "id": "h-9",
+              "x": 84,
+              "y": 34,
+              "team": "home",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-5",
+              "x": 80,
+              "y": 56,
+              "team": "away",
+              "number": "5",
+              "name": "补位者",
+              "role": "actor"
+            },
+            {
+              "id": "a-4",
+              "x": 72,
+              "y": 70,
+              "team": "away",
+              "number": "4",
+              "name": "回追者",
+              "role": "context"
+            },
+            {
+              "id": "a-6",
+              "x": 70,
+              "y": 28,
+              "team": "away",
+              "number": "6",
+              "name": "回追者",
+              "role": "context"
+            },
+            {
+              "id": "a-1",
+              "x": 93,
+              "y": 50,
+              "team": "away",
+              "number": "1",
+              "name": "门将",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                78,
+                59
+              ],
+              "to": [
+                84,
+                34
+              ],
+              "type": "pass",
+              "label": "送出传球"
+            },
+            {
+              "from": [
+                84,
+                34
+              ],
+              "to": [
+                94,
+                42
+              ],
+              "type": "run",
+              "label": "冲击球门"
+            }
+          ],
+          "lines": [],
+          "zones": [
+            {
+              "x": 86,
+              "y": 35,
+              "radius": 9,
+              "label": "空位球员"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "decoy-run",
+      "group": "play",
+      "time": "52′",
+      "short": "一次诱饵跑动打开内线",
+      "title": "边路跑动者没有接球，却带走了一名防守者",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "演示回合 + 足球概念",
+      "legendSummary": "11号边锋 · 10号组织者 · 2号边后卫",
+      "concept": {
+        "name": "诱饵跑动",
+        "canonicalTerm": "Decoy run",
+        "definition": "跑动者把防守者带离队友真正想利用的空间。",
+        "watchCue": "不要只看球，也看哪名防守者跟随了跑动者。",
+        "dilemma": "跟随跑动者会打开内线；留守位置又会放空跑动者。",
+        "transferCue": "以后留意那些没有触球，却制造出机会的跑动。"
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "起势",
+          "note": "边锋在宽位接球，身后有一名套边跑动者。",
+          "players": [
+            {
+              "id": "h-11",
+              "x": 58,
+              "y": 24,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 48,
+              "y": 18,
+              "team": "home",
+              "number": "2",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 57,
+              "y": 50,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 69,
+              "y": 24,
+              "team": "away",
+              "number": "3",
+              "name": "防守者",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 74,
+              "y": 48,
+              "team": "away",
+              "number": "6",
+              "name": "补位者",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                48,
+                18
+              ],
+              "to": [
+                68,
+                12
+              ],
+              "type": "run",
+              "label": "诱饵跑动"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                69,
+                24
+              ],
+              "to": [
+                74,
+                48
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 68,
+              "y": 42,
+              "radius": 10,
+              "label": "内线通道"
+            }
+          ]
+        },
+        {
+          "id": "trigger",
+          "label": "触发",
+          "note": "边后卫向外侧跑动，把最近的防守者带向边线。",
+          "players": [
+            {
+              "id": "h-11",
+              "x": 64,
+              "y": 26,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 65,
+              "y": 12,
+              "team": "home",
+              "number": "2",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 64,
+              "y": 49,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 72,
+              "y": 18,
+              "team": "away",
+              "number": "3",
+              "name": "防守者",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 77,
+              "y": 49,
+              "team": "away",
+              "number": "6",
+              "name": "补位者",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                64,
+                26
+              ],
+              "to": [
+                72,
+                43
+              ],
+              "type": "carry",
+              "label": "向内推进"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                72,
+                18
+              ],
+              "to": [
+                77,
+                49
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 72,
+              "y": 41,
+              "radius": 10,
+              "label": "被打开的空间"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "结果",
+          "note": "边锋向内推进，诱饵跑动者留在外线。",
+          "players": [
+            {
+              "id": "h-11",
+              "x": 75,
+              "y": 42,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "h-2",
+              "x": 78,
+              "y": 12,
+              "team": "home",
+              "number": "2",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-10",
+              "x": 75,
+              "y": 58,
+              "team": "home",
+              "number": "10",
+              "name": "组织者",
+              "role": "actor"
+            },
+            {
+              "id": "a-3",
+              "x": 80,
+              "y": 19,
+              "team": "away",
+              "number": "3",
+              "name": "防守者",
+              "role": "actor"
+            },
+            {
+              "id": "a-6",
+              "x": 83,
+              "y": 50,
+              "team": "away",
+              "number": "6",
+              "name": "补位者",
+              "role": "context"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                75,
+                42
+              ],
+              "to": [
+                89,
+                48
+              ],
+              "type": "pass",
+              "label": "最后一传"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                80,
+                19
+              ],
+              "to": [
+                83,
+                50
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 82,
+              "y": 43,
+              "radius": 9,
+              "label": "内线通道"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "side-overload",
+      "group": "play",
+      "time": "67′",
+      "short": "三名进攻者在左路形成人数优势",
+      "title": "边路人数优势制造出空位第三人",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "演示回合 + 足球概念",
+      "legendSummary": "3名进攻者 · 2名防守者 · 左侧通道",
+      "concept": {
+        "name": "边路人数优势",
+        "canonicalTerm": "Side overload · 3v2",
+        "definition": "进攻方在一侧集中多一名球员，制造空位传球选择。",
+        "watchCue": "先数同一条纵向通道里的人数，再跟随球。",
+        "dilemma": "向球侧收缩会暴露远端；保持平衡又会让出局部空位。",
+        "transferCue": "以后寻找边线附近三名进攻者包围两名防守者的三角。"
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "起势",
+          "note": "三名进攻者在左侧形成三角，对抗两名防守者。",
+          "players": [
+            {
+              "id": "h-3",
+              "x": 54,
+              "y": 20,
+              "team": "home",
+              "number": "3",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 58,
+              "y": 37,
+              "team": "home",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 66,
+              "y": 14,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 70,
+              "y": 22,
+              "team": "away",
+              "number": "2",
+              "name": "防守者",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 69,
+              "y": 39,
+              "team": "away",
+              "number": "8",
+              "name": "补位者",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                54,
+                20
+              ],
+              "to": [
+                58,
+                37
+              ],
+              "type": "pass",
+              "label": "第一传"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                70,
+                22
+              ],
+              "to": [
+                69,
+                39
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 62,
+              "y": 25,
+              "radius": 12,
+              "label": "3v2"
+            }
+          ]
+        },
+        {
+          "id": "decision",
+          "label": "抉择",
+          "note": "中场吸引两名防守者，再找到第三人。",
+          "players": [
+            {
+              "id": "h-3",
+              "x": 62,
+              "y": 19,
+              "team": "home",
+              "number": "3",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 66,
+              "y": 35,
+              "team": "home",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 73,
+              "y": 13,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 73,
+              "y": 23,
+              "team": "away",
+              "number": "2",
+              "name": "防守者",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 72,
+              "y": 37,
+              "team": "away",
+              "number": "8",
+              "name": "补位者",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                66,
+                35
+              ],
+              "to": [
+                73,
+                13
+              ],
+              "type": "pass",
+              "label": "第三人"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                73,
+                23
+              ],
+              "to": [
+                72,
+                37
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 75,
+              "y": 13,
+              "radius": 8,
+              "label": "空位球员"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "结果",
+          "note": "空位边锋在两名防守者身后接球。",
+          "players": [
+            {
+              "id": "h-3",
+              "x": 70,
+              "y": 20,
+              "team": "home",
+              "number": "3",
+              "name": "边后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-8",
+              "x": 74,
+              "y": 38,
+              "team": "home",
+              "number": "8",
+              "name": "中场",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 84,
+              "y": 14,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "actor"
+            },
+            {
+              "id": "a-2",
+              "x": 79,
+              "y": 25,
+              "team": "away",
+              "number": "2",
+              "name": "防守者",
+              "role": "actor"
+            },
+            {
+              "id": "a-8",
+              "x": 78,
+              "y": 41,
+              "team": "away",
+              "number": "8",
+              "name": "补位者",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                84,
+                14
+              ],
+              "to": [
+                92,
+                28
+              ],
+              "type": "carry",
+              "label": "冲击禁区"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                79,
+                25
+              ],
+              "to": [
+                78,
+                41
+              ],
+              "team": "away"
+            }
+          ],
+          "zones": [
+            {
+              "x": 86,
+              "y": 20,
+              "radius": 9,
+              "label": "空位球员"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "rest-defense",
+      "group": "play",
+      "time": "81′",
+      "short": "后方结构保护反击空间",
+      "title": "进攻身后的剩余防守保持连接",
+      "sourceIds": [
+        "demo-report",
+        "demo-concept"
+      ],
+      "evidenceLabel": "演示回合 + 足球概念",
+      "legendSummary": "进攻接应 · 两名后卫 + 一名后腰",
+      "concept": {
+        "name": "剩余防守",
+        "canonicalTerm": "Rest defense",
+        "definition": "进攻身后的球员保持位置，用来控制解围球或反击。",
+        "watchCue": "球进入禁区时，把视线移到进攻身后的保护球员。",
+        "dilemma": "再增加一名禁区进攻者，还是保留足够的反击保护。",
+        "transferCue": "传中后数一数仍在球后保持连接的球员。"
+      },
+      "phases": [
+        {
+          "id": "setup",
+          "label": "起势",
+          "note": "进攻向前发展，两名中卫和一名后腰留在后方。",
+          "players": [
+            {
+              "id": "h-5",
+              "x": 48,
+              "y": 38,
+              "team": "home",
+              "number": "5",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 48,
+              "y": 62,
+              "team": "home",
+              "number": "6",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 58,
+              "y": 50,
+              "team": "home",
+              "number": "4",
+              "name": "后腰",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 75,
+              "y": 22,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "context"
+            },
+            {
+              "id": "a-9",
+              "x": 56,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                75,
+                22
+              ],
+              "to": [
+                87,
+                32
+              ],
+              "type": "carry",
+              "label": "进攻"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                48,
+                38
+              ],
+              "to": [
+                48,
+                62
+              ],
+              "team": "home"
+            }
+          ],
+          "zones": [
+            {
+              "x": 52,
+              "y": 50,
+              "radius": 13,
+              "label": "剩余防守"
+            }
+          ]
+        },
+        {
+          "id": "turnover",
+          "label": "转换",
+          "note": "传中被解围到对方前锋附近。",
+          "players": [
+            {
+              "id": "h-5",
+              "x": 53,
+              "y": 38,
+              "team": "home",
+              "number": "5",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 53,
+              "y": 62,
+              "team": "home",
+              "number": "6",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 61,
+              "y": 50,
+              "team": "home",
+              "number": "4",
+              "name": "后腰",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 82,
+              "y": 24,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "context"
+            },
+            {
+              "id": "a-9",
+              "x": 62,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                84,
+                30
+              ],
+              "to": [
+                62,
+                50
+              ],
+              "type": "pass",
+              "label": "解围"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                53,
+                38
+              ],
+              "to": [
+                53,
+                62
+              ],
+              "team": "home"
+            }
+          ],
+          "zones": [
+            {
+              "x": 57,
+              "y": 50,
+              "radius": 12,
+              "label": "保护三角"
+            }
+          ]
+        },
+        {
+          "id": "outcome",
+          "label": "结果",
+          "note": "后腰争抢解围球，两名中卫保护身后。",
+          "players": [
+            {
+              "id": "h-5",
+              "x": 58,
+              "y": 38,
+              "team": "home",
+              "number": "5",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-6",
+              "x": 58,
+              "y": 62,
+              "team": "home",
+              "number": "6",
+              "name": "中后卫",
+              "role": "actor"
+            },
+            {
+              "id": "h-4",
+              "x": 66,
+              "y": 50,
+              "team": "home",
+              "number": "4",
+              "name": "后腰",
+              "role": "actor"
+            },
+            {
+              "id": "h-11",
+              "x": 86,
+              "y": 26,
+              "team": "home",
+              "number": "11",
+              "name": "边锋",
+              "role": "context"
+            },
+            {
+              "id": "a-9",
+              "x": 65,
+              "y": 50,
+              "team": "away",
+              "number": "9",
+              "name": "前锋",
+              "role": "actor"
+            }
+          ],
+          "arrows": [
+            {
+              "from": [
+                66,
+                50
+              ],
+              "to": [
+                70,
+                50
+              ],
+              "type": "press",
+              "label": "上前争抢"
+            }
+          ],
+          "lines": [
+            {
+              "from": [
+                58,
+                38
+              ],
+              "to": [
+                58,
+                62
+              ],
+              "team": "home"
+            }
+          ],
+          "zones": [
+            {
+              "x": 62,
+              "y": 50,
+              "radius": 11,
+              "label": "反击受控"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

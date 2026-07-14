@@ -1,0 +1,4 @@
+interface:
+  display_name: "Football Match Room"
+  short_description: "Build sourced tactical match-learning rooms"
+  default_prompt: "Use $decode-football-match to research a real match and build an interactive tactical learning room."

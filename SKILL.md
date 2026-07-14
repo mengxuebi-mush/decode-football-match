@@ -1,0 +1,115 @@
+---
+name: decode-football-match
+description: Research a real football match and transform reliable evidence into an interactive tactical Match Room with a sourced timeline, animated pitch diagrams, reusable football concepts, and contextual Codex follow-up. Use when a user wants to understand tactics, formations, rules, or critical plays through a specific real match.
+---
+
+# Decode Football Match
+
+Create a sourced, runnable tactical-learning experience for a casual fan. Keep the real match primary, teach only when a moment creates curiosity, and keep Codex—not the preview—as the conversation surface.
+
+## Inputs
+
+Accept a match, competition or year, learning goal, optional highlight URL, optional locale, optional key-play count, and optional output directory. If the match identity is ambiguous and reliable research cannot resolve it, ask one concise question. Otherwise proceed.
+
+Interpret requests such as “include 8 key plays” or “只要最重要的5个回合” as an explicit `keyPlaySelection.target`. If the user gives no count, target 6 tactical plays. Prefer 5–8 for a full-match experience and allow 1–12 when explicitly requested.
+
+Choose the locale in this order:
+
+1. Explicitly requested locale.
+2. Language of the user's request.
+3. Active conversation locale.
+4. `en`.
+
+V1 supports `en` and `zh-CN`. Use a BCP-47 value in `match-data.json`. Preserve canonical player, club, competition, and source names when translation reduces accuracy. Prefer highlight videos and sources in the selected language; disclose when only another-language material is available.
+
+## Required workflow
+
+### 1. Read the contracts
+
+Read these files before researching or generating:
+
+- `references/evidence-policy.md`
+- `references/content-model.md`
+- `references/ui-contract.md`
+
+Treat `assets/match-room-template/` as an immutable visual base. Modify match content and structured data, not the component hierarchy, visual theme, diagram grammar, responsive behavior, or motion model.
+
+### 2. Establish an evidence register
+
+Search for official match reports, team sheets, competition video, reliable reporting, attributed tactical analysis, and official laws when rules are involved. Record each candidate claim with source URL, evidence class, and the exact fact or interpretation it supports.
+
+Separate:
+
+- confirmed match facts;
+- attributed tactical analysis;
+- official laws;
+- general football knowledge;
+- unsupported claims.
+
+Apply `references/evidence-policy.md`. Omit unsupported formations, positions, timestamps, intentions, causal claims, and player locations. Never turn a plausible inference into a match fact.
+
+### 3. Select teachable moments
+
+Put `Match context` before `Key tactical plays`. Include only moments that have reliable support and teach a reusable spatial idea. A goal is not automatically a tactical moment.
+
+Build a ranked candidate list before drawing. Rank by evidence strength, tactical reusability, spatial clarity, and variety. Stop at `keyPlaySelection.target`; do not add weaker filler after the target is reached. If reliable evidence supports fewer plays than requested, include fewer, set `included` to the actual count, and explain the shortfall in `limitationNote`. Never lower the evidence gate to satisfy the number.
+
+For every tactical play provide:
+
+- localized concept name and canonical English term;
+- one-sentence definition;
+- what to watch;
+- the key decision or defensive dilemma;
+- how to recognize the pattern in another match.
+
+Prefer concepts such as decoy run, side overload, local overload, third-player run, rest defense, pinning, line-breaking carry, counterpress, pressing trap, and weak-side isolation only when the evidence and visible sequence support them.
+
+### 4. Build three spatial phases
+
+Create exactly three materially different phases for every tactical play. Preserve stable player IDs across phases. Show the relevant ball carrier, supporting attackers, defenders, cover, goalkeeper, defensive units, movement, passing options, and highlighted space when supported.
+
+Use solid actors for recorded event participants and faded contextual players for teaching context. Mark reconstructed spacing and interpolation as teaching motion, not tracking data. Do not claim exact coordinates.
+
+### 5. Scaffold and populate
+
+Default to `./football-companion-<match-slug>` unless the user supplies an output path. Run:
+
+```bash
+python3 <skill-dir>/scripts/scaffold_match_room.py <output-dir> --locale <locale> --key-plays <target>
+```
+
+Replace `<output-dir>/src/match-data.json` with data conforming to `references/content-model.md`. Do not hardcode localized copy in React components; interface labels come from `src/i18n.js`.
+
+### 6. Validate and build
+
+Run:
+
+```bash
+node <skill-dir>/scripts/validate_match_data.mjs <output-dir>/src/match-data.json
+npm install
+npm run build
+```
+
+Resolve every validation error. Also inspect the rendered desktop and mobile layouts against `assets/visual-baselines/`. Verify autoplay, manual interruption, final-state stopping, reduced-motion fallback, internal scrolling, and URL state such as `?moment=two-v-one&phase=decision`.
+
+### 7. Open the direct preview
+
+Start the local Vite preview, capture its actual port, and open the direct preview beside Codex. Do not use Lavish. Do not embed a fake chat panel or simulated agent. The user asks follow-up questions in the real Codex task; use URL state to understand the visible moment and phase.
+
+## Language contract
+
+For `en`, render all interface labels, explanations, phase names, and teaching content in English. For `zh-CN`, render the interface and explanations in Simplified Chinese and show the canonical English tactical term beside each Chinese concept. Never mix fallback languages within one screen.
+
+## Completion criteria
+
+Finish only when:
+
+- every match-specific claim has a registered source and evidence class;
+- the number of tactical plays matches `keyPlaySelection.included`, never exceeds its target, and explains any evidence-limited shortfall;
+- unsupported claims have been removed;
+- context precedes plays;
+- every play has exactly three meaningful phases and stable identities;
+- every concept has definition, watch cue, dilemma, and transfer cue;
+- both validation and production build pass;
+- desktop and mobile preserve the Match Room UI contract;
+- the direct preview opens without Lavish or embedded chat.
