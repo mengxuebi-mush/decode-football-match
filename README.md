@@ -6,31 +6,6 @@ Turn a real football match into an interactive tactical learning experience for 
 
 The match remains the primary experience. There are no courses, quizzes, dashboards, progress systems, or simulated chat panels. Follow-up questions stay in the real Codex conversation.
 
-## What it creates
-
-- A sourced match timeline with match context before tactical plays
-- An organically selected set of tactical key plays, based on what the video can reliably teach
-- At least five distinct key plays; if the available evidence cannot support five, the skill reports that limitation instead of inventing moments
-- Three materially different phases for every play, with continuous player motion
-- Tactical concepts such as decoy runs, side overloads, pressing traps, rest defense, pinning, and line-breaking carries when the evidence supports them
-- A permanently visible learning card explaining the concept, what to watch, the key dilemma, and how to recognize it in another match
-- A responsive English or Simplified Chinese interface
-- A direct local preview that works beside Codex without Lavish or a browser extension
-
-## Evidence and video policy
-
-If the user supplies a highlight URL, the skill verifies that it is the correct match and is playable in the user's region.
-
-Otherwise, it searches YouTube first and prioritizes:
-
-1. Official competition or federation channels
-2. Official team channels
-3. Official broadcasters or rights holders
-
-If YouTube is unavailable in the user's region, it looks for another official highlight hosted by the competition, federation, team, broadcaster, or rights holder. Articles support the analysis but do not replace the video as the primary match surface.
-
-Every match-specific claim must have a source and an evidence classification. Unsupported formations, locations, intentions, timestamps, and causal explanations are omitted.
-
 ## Install
 
 Clone the repository into your personal Codex skills directory:
@@ -70,6 +45,31 @@ The experience follows the language of the request unless you explicitly choose 
 ```
 
 English (`en`) and Simplified Chinese (`zh-CN`) are supported in V1. Chinese explanations retain the canonical English tactical term beside the translated concept.
+
+## What it creates
+
+- A sourced match timeline with match context before tactical plays
+- An organically selected set of tactical key plays, based on what the video can reliably teach
+- At least five distinct key plays; if the available evidence cannot support five, the skill reports that limitation instead of inventing moments
+- Three materially different phases for every play, with continuous player motion
+- Tactical concepts such as decoy runs, side overloads, pressing traps, rest defense, pinning, and line-breaking carries when the evidence supports them
+- A permanently visible learning card explaining the concept, what to watch, the key dilemma, and how to recognize it in another match
+- A responsive English or Simplified Chinese interface
+- A direct local preview that works beside Codex without Lavish or a browser extension
+
+## Evidence and video policy
+
+If the user supplies a highlight URL, the skill verifies that it is the correct match and is playable in the user's region.
+
+Otherwise, it searches YouTube first and prioritizes:
+
+1. Official competition or federation channels
+2. Official team channels
+3. Official broadcasters or rights holders
+
+If YouTube is unavailable in the user's region, it looks for another official highlight hosted by the competition, federation, team, broadcaster, or rights holder. Articles support the analysis but do not replace the video as the primary match surface.
+
+Every match-specific claim must have a source and an evidence classification. Unsupported formations, locations, intentions, timestamps, and causal explanations are omitted.
 
 ## How it works
 
@@ -128,4 +128,3 @@ cd /tmp/football-companion-demo
 npm install
 npm run build
 ```
-
