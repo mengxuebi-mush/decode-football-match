@@ -6,45 +6,49 @@ Turn a real football match into an interactive tactical learning experience for 
 
 The match remains the primary experience. There are no courses, quizzes, dashboards, progress systems, or simulated chat panels. Follow-up questions stay in the real Codex conversation.
 
-## Install
+## Install — one time only
 
-Clone the repository into your personal Codex skills directory:
+You do not need to use the terminal.
 
-```bash
-mkdir -p ~/.codex/skills
-git clone https://github.com/mengxuebi-mush/decode-football-match.git \
-  ~/.codex/skills/decode-football-match
-```
+1. Open Codex and start a new task.
+2. Copy and send this message:
 
-The repository is currently private, so GitHub authentication is required. Restart Codex after installation so it discovers the skill.
+   ```text
+   Install the skill from https://github.com/mengxuebi-mush/decode-football-match
+   ```
 
-To update an existing installation:
+3. Approve the installation if Codex asks.
+4. Quit and reopen Codex.
 
-```bash
-git -C ~/.codex/skills/decode-football-match pull
-```
+That is it. The skill is now available as `$decode-football-match`.
 
-## Use
+> This repository is currently private. You must be signed in to a GitHub account that can access it.
 
-Invoke the skill by name and identify the match you want to understand:
+## Use — just name a match
 
-```text
-Use $decode-football-match to explain the tactics in England vs Norway at the 2026 World Cup.
-```
-
-You can also provide a learning goal or highlight URL:
+Open a new Codex task and send:
 
 ```text
-Use $decode-football-match to analyze this match. Help me understand side overloads and rest defense: <highlight-url>
+Use $decode-football-match to help me understand England vs Norway at the 2026 World Cup.
 ```
 
-The experience follows the language of the request unless you explicitly choose another language:
+Replace the teams and competition with any real match you want to understand. You do not need to find a video—the skill will search for an official highlight.
+
+If you care about a particular idea, add it naturally:
 
 ```text
-使用 $decode-football-match，通过这场比赛帮我理解诱饵跑动和局部人数优势。
+Use $decode-football-match to help me understand this match, especially pressing and side overloads.
 ```
 
-English (`en`) and Simplified Chinese (`zh-CN`) are supported in V1. Chinese explanations retain the canonical English tactical term beside the translated concept.
+If you already have a highlight video, paste its link in the same message.
+
+Write in the language you want the experience to use. For example:
+
+```text
+使用 $decode-football-match，通过英格兰对挪威的比赛帮我理解压迫和局部人数优势。
+```
+
+The first version supports English and Simplified Chinese.
 
 ## What it creates
 
