@@ -121,7 +121,7 @@ async function auditPage(page) {
       }
     }
 
-    const controls = document.querySelectorAll(".moment-card, .phase-tabs button, .replay-button, .source-link, .evidence-links a, .formation-guide-card a");
+    const controls = document.querySelectorAll(".moment-card, .phase-tabs button, .replay-button, .source-link, .evidence-menu summary, .evidence-menu-list a, .formation-guide-card a");
     for (const control of controls) {
       if (!visible(control)) continue;
       const rect = control.getBoundingClientRect();
@@ -133,6 +133,40 @@ async function auditPage(page) {
       const rect = pitchFrame.getBoundingClientRect();
       const ratio = rect.width / rect.height;
       if (ratio < 1.45 || ratio > 1.85) failures.push(`pitch aspect ratio is ${ratio.toFixed(2)} (${Math.round(rect.width)}x${Math.round(rect.height)}px); expected a readable landscape pitch`);
+    }
+
+    const analysisPanel = document.querySelector(".analysis-panel");
+    const concept = document.querySelector(".concept");
+    const evidenceMenu = document.querySelector(".evidence-menu");
+    const evidenceLinks = evidenceMenu?.querySelectorAll(".evidence-menu-list a") ?? [];
+    if (!evidenceMenu) failures.push("resources dropdown is missing");
+    if (evidenceLinks.length === 0) failures.push("resources dropdown contains no source links");
+    if (evidenceMenu) {
+      evidenceMenu.open = true;
+      const list = evidenceMenu.querySelector(".evidence-menu-list");
+      const listRect = list?.getBoundingClientRect();
+      if (!listRect || listRect.width <= 0 || listRect.height <= 0) failures.push("resources dropdown does not reveal its source links");
+      if (listRect && (listRect.left < 0 || listRect.right > innerWidth + 1)) failures.push("resources dropdown overflows the viewport");
+      for (const link of evidenceLinks) {
+        const rect = link.getBoundingClientRect();
+        if (rect.width + 0.01 < minTarget || rect.height + 0.01 < minTarget) failures.push(`${selector(link)} target is ${Math.round(rect.width)}x${Math.round(rect.height)}px`);
+      }
+      evidenceMenu.open = false;
+    }
+    if (analysisPanel && concept) {
+      const panelStyle = getComputedStyle(analysisPanel);
+      const needsScroll = analysisPanel.scrollHeight > analysisPanel.clientHeight + 1;
+      if (needsScroll && !["auto", "scroll"].includes(panelStyle.overflowY)) {
+        failures.push("analysis panel clips the pitch or learning card instead of scrolling internally");
+      } else if (needsScroll) {
+        const originalScrollTop = analysisPanel.scrollTop;
+        analysisPanel.scrollTop = analysisPanel.scrollHeight;
+        const panelRect = analysisPanel.getBoundingClientRect();
+        const conceptRect = concept.getBoundingClientRect();
+        const conceptReachable = conceptRect.bottom > panelRect.top && conceptRect.top < panelRect.bottom;
+        analysisPanel.scrollTop = originalScrollTop;
+        if (!conceptReachable) failures.push("expanded learning card is not reachable inside the analysis panel");
+      }
     }
 
     if (document.documentElement.scrollWidth > innerWidth + 1) failures.push(`document width ${document.documentElement.scrollWidth}px exceeds viewport ${innerWidth}px`);

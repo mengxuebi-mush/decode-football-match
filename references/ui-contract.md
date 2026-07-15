@@ -10,6 +10,7 @@ The files in `assets/match-room-template/` are the fixed interface. Populate dat
 - Typography is quiet and editorial. The match and pitch dominate; chrome recedes.
 - Use the bundled Atkinson Hyperlegible files for Latin text, with system Chinese fallbacks. Do not fetch fonts at runtime.
 - No visible interface, timeline, teaching, legend, or canvas text may render below 14px.
+- Keep the replay action as a borderless 44px icon-only button immediately after the three phase tabs. Give it an accessible name and a visible hover/focus tooltip. Keep moment titles on one line when the desktop analysis width can contain them; restore normal wrapping at narrow breakpoints.
 - Normal text must meet a 4.5:1 contrast ratio. Large text and essential graphical controls must meet 3:1. Do not lower contrast by applying opacity to a parent containing text.
 
 ## Desktop hierarchy
@@ -22,6 +23,8 @@ Use one viewport with internal scrolling:
 4. Codex conversation outside the preview.
 
 Place `Match context` before `Key tactical plays`. Never add an embedded fake chat panel.
+
+Group every source for the selected moment inside one compact localized `Sources` dropdown beneath the analysis title. Show the source count on the closed control, preserve every direct source link inside the open menu, and overlay the menu without moving or shrinking the pitch.
 
 Render the full organically selected key-play set in the timeline. Require at least five plays and impose no UI maximum; the timeline scrolls internally as needed. Do not truncate the set merely to keep the timeline short.
 
