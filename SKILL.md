@@ -92,6 +92,8 @@ python3 <skill-dir>/scripts/scaffold_match_room.py <output-dir> --locale <locale
 
 Replace `<output-dir>/src/match-data.json` with data conforming to `references/content-model.md`. Do not hardcode localized copy in React components; interface labels come from `src/i18n.js`.
 
+If `<output-dir>` is an existing Match Room, treat it as untrusted legacy output until it passes the current validator. Before editing or previewing it, verify that `package.json` includes `test:ui`, `scripts/validate-ui.mjs` exists, and Playwright is installed. If any are missing, bring those validation files and package entries forward from `assets/match-room-template/`, preserve the room's match data and intentional customizations, then run the current validator as a baseline. Never infer compliance from the installed skill version or from CSS tokens alone; enforce it against the rendered room.
+
 ### 7. Validate and build
 
 Run:
