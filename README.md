@@ -136,3 +136,9 @@ npm run test:ui
 ```
 
 The UI test builds the room and checks every moment at desktop, narrow desktop, mobile, compact mobile, and 200% text zoom. It fails if text is too small, contrast is too low, controls are undersized, timeline copy overlaps, the page overflows horizontally, or the pitch becomes unreadably distorted.
+
+## License
+
+The original source code in this repository is licensed under the [MIT License](LICENSE).
+
+The bundled Atkinson Hyperlegible font is licensed separately under the [SIL Open Font License 1.1](assets/match-room-template/src/assets/fonts/OFL.txt).
