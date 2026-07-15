@@ -22,7 +22,7 @@ You do not need to use the terminal.
 
 That is it. The skill is now available as `$decode-football-match`.
 
-> This repository is currently private. You must be signed in to a GitHub account that can access it.
+> This repository is public. No GitHub repository access is required to install the skill.
 
 ## Use — just name a match
 
