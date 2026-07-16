@@ -135,7 +135,7 @@ npm install
 npm run test:ui
 ```
 
-The UI test builds the room and checks every moment at desktop, narrow desktop, mobile, compact mobile, and 200% text zoom. It fails if text is too small, contrast is too low, controls are undersized, timeline copy overlaps, the page overflows horizontally, or the pitch becomes unreadably distorted.
+The UI test builds the room and checks every moment at desktop, a short-laptop viewport, narrow desktop, mobile, compact mobile, and 200% text zoom. It fails if text is too small, contrast is too low, controls are undersized, timeline copy overlaps, the page overflows horizontally, the pitch becomes unreadably distorted, or the learning card is hidden below the fold on a short laptop.
 
 ## License
 
