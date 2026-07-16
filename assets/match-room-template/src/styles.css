@@ -327,6 +327,7 @@ a:focus-visible {
   .moment-card.active,
   .phase-tabs button[aria-selected="true"],
   .tactic-chip { border: 2px solid ButtonText; }
+  .pitch-frame { border: 1px solid ButtonText; }
 }
 
 @media (prefers-reduced-motion: reduce) {
