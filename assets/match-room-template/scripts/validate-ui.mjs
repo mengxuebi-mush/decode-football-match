@@ -9,6 +9,7 @@ const MIN_FONT_PX = 14;
 const MIN_TARGET_PX = 44;
 const scenarios = [
   { name: "desktop", width: 1440, height: 900 },
+  { name: "short-laptop", width: 1440, height: 800, requireConceptPeek: true },
   { name: "narrow-desktop", width: 1024, height: 768 },
   { name: "mobile", width: 390, height: 844 },
   { name: "compact-mobile", width: 320, height: 844 },
@@ -129,6 +130,13 @@ async function auditPage(page) {
     }
 
     const pitchFrame = document.querySelector(".pitch-frame");
+    if (document.querySelector(".teaching-label")) failures.push("pitch contains the removed persistent teaching-reconstruction label");
+    const pitchShell = document.querySelector(".pitch-shell");
+    if (pitchShell && visible(pitchShell)) {
+      const shellStyle = getComputedStyle(pitchShell);
+      const shellBorders = [shellStyle.borderTopWidth, shellStyle.borderRightWidth, shellStyle.borderBottomWidth, shellStyle.borderLeftWidth].map(Number.parseFloat);
+      if (shellBorders.some((width) => width > 0.01)) failures.push("pitch shell adds a redundant outer divider around the legend and pitch");
+    }
     if (pitchFrame && visible(pitchFrame)) {
       const rect = pitchFrame.getBoundingClientRect();
       const ratio = rect.width / rect.height;
@@ -221,6 +229,17 @@ try {
       await page.waitForTimeout(75);
       const momentId = await cards.nth(index).getAttribute("data-moment-id");
       const failures = await auditPage(page);
+      if (scenario.requireConceptPeek) {
+        const peek = await page.evaluate(() => {
+          const panel = document.querySelector(".analysis-panel");
+          const concept = document.querySelector(".concept");
+          if (!panel || !concept) return null;
+          const panelRect = panel.getBoundingClientRect();
+          const conceptRect = concept.getBoundingClientRect();
+          return Math.max(0, Math.min(panelRect.bottom, conceptRect.bottom) - Math.max(panelRect.top, conceptRect.top));
+        });
+        if (peek !== null && peek < 64) failures.push(`learning card preview is only ${Math.round(peek)}px tall on a short laptop; expected at least 64px`);
+      }
       failures.forEach((failure) => allFailures.push(`${scenario.name}/${momentId}: ${failure}`));
     }
     await page.close();

@@ -34,6 +34,7 @@ Timeline cards show only the match time, plain-language moment title, and reusab
 
 - Render alternating vertical grass stripes.
 - Put the legend in the shared meta row directly above the pitch (right-aligned beside the `Sources` dropdown), always above the plotted action.
+- Do not draw an additional outer border around the pitch shell. The pitch's own field boundary provides sufficient containment.
 - Show numbered circles and player names.
 - Show relevant attacking support, defenders, cover, goalkeeper, defensive lines, arrows, and highlighted space.
 - Use solid opacity for event actors and faded opacity for contextual teaching players.
@@ -50,7 +51,7 @@ Timeline cards show only the match time, plain-language moment title, and reusab
 - Manual phase selection interrupts autoplay immediately.
 - Replay stops on the final phase.
 - Under `prefers-reduced-motion: reduce`, skip interpolation and update states immediately.
-- Caption the animation as teaching motion or reconstruction, never tracking data.
+- Disclose teaching reconstruction through the selected moment's registered source and evidence metadata near the title, never as a persistent label over the pitch and never as tracking data.
 
 ## Learning card
 
@@ -69,6 +70,7 @@ Guide body text (`What to watch`, `Key dilemma`, `Recognize it next time`) uses 
 ## Responsive behavior
 
 - Keep the pitch primary at every size.
+- On wide but height-constrained laptops, size the pitch from both the available width and the analysis-panel height. At initial scroll, preserve at least a 64px preview of the expanded learning card below the pitch; do not make users discover the teaching content only by scrolling.
 - Desktop uses a fixed viewport; timeline and learning card scroll internally when needed.
 - At tablet width, move the timeline into a horizontal rail above the pitch.
 - On mobile, simplify secondary chrome, retain phase controls and concept content, and avoid an excessively tall document.
@@ -78,7 +80,7 @@ Guide body text (`What to watch`, `Key dilemma`, `Recognize it next time`) uses 
 
 ## Required UI validation
 
-Run `npm run test:ui` after populating real match data. It builds the current source and tests every moment at 1440×900, 1024×768, 390×844, 320×844, and 200% text zoom.
+Run `npm run test:ui` after populating real match data. It builds the current source and tests every moment at 1440×900, a short 1440×800 laptop viewport, 1024×768, 390×844, 320×844, and 200% text zoom.
 
 The generated room is not complete unless the validator confirms:
 
