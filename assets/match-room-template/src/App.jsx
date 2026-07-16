@@ -79,7 +79,6 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
           <span>{phase.label}</span>
           <p>{phase.note}</p>
         </div>
-        <small className="teaching-label">{copy.reconstruction}</small>
       </div>
     </div>
   );

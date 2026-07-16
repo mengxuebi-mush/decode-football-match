@@ -104,7 +104,7 @@ npm install
 npm run test:ui
 ```
 
-`npm run test:ui` builds the current source, selects every moment, and tests desktop, narrow-desktop, mobile, compact-mobile, and 200% text-zoom layouts. Resolve every validation error; do not open or deliver a room that fails. The validator enforces a 14px minimum for visible DOM and canvas text, readable contrast, 44px targets, non-overlapping timeline content, document overflow protection, and a legible pitch ratio.
+`npm run test:ui` builds the current source, selects every moment, and tests desktop, short-laptop, narrow-desktop, mobile, compact-mobile, and 200% text-zoom layouts. Resolve every validation error; do not open or deliver a room that fails. The validator enforces a 14px minimum for visible DOM and canvas text, readable contrast, 44px targets, non-overlapping timeline content, document overflow protection, a legible pitch ratio, and an initially visible learning-card preview on height-constrained laptops.
 
 Inspect the generated screenshots in `<output-dir>/test-results/` against `assets/visual-baselines/desktop.png`, `narrow-desktop.png`, and `mobile.png`. Check the actual localized content, especially long source names, moment titles, concepts, player labels, and phase names. Verify that selecting a tactical play automatically starts its three-phase sequence, manual phase selection interrupts it, replay restarts from phase one, playback stops after the final interpolation, reduced-motion fallback works, internal timeline and pitch scrolling work, and URL state such as `?moment=two-v-one&phase=decision` remains addressable without forced autoplay.
 
