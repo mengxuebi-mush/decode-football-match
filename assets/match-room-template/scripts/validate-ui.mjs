@@ -169,6 +169,29 @@ async function auditPage(page) {
       }
     }
 
+    const rootFontPx = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const zoomed = rootFontPx > 24;
+    const titleElement = document.querySelector(".analysis-head h1");
+    const phaseControls = document.querySelector(".phase-controls");
+    if (titleElement && phaseControls && visible(titleElement) && visible(phaseControls)) {
+      const a = titleElement.getBoundingClientRect();
+      const b = phaseControls.getBoundingClientRect();
+      const overlapX = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+      const overlapY = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+      if (overlapX > 1 && overlapY > 1) failures.push("moment title collides with the phase controls");
+    }
+    if (document.querySelector(".concept-cue")) failures.push("concept summary duplicates guide content; cues belong only in the learning guide");
+    for (const guideText of document.querySelectorAll(".learning-guide p")) {
+      if (visible(guideText) && Number.parseFloat(getComputedStyle(guideText).fontSize) + 0.01 < rootFontPx) failures.push("learning-guide text is below the 16px body size");
+    }
+    const legend = document.querySelector(".legend");
+    const sourcesSummary = document.querySelector(".evidence-menu summary");
+    if (!zoomed && innerWidth >= 1024 && legend && sourcesSummary && visible(legend) && visible(sourcesSummary)) {
+      const lr = legend.getBoundingClientRect();
+      const sr = sourcesSummary.getBoundingClientRect();
+      if (lr.top >= sr.bottom || sr.top >= lr.bottom) failures.push("pitch legend does not share the sources row on desktop");
+    }
+
     if (document.documentElement.scrollWidth > innerWidth + 1) failures.push(`document width ${document.documentElement.scrollWidth}px exceeds viewport ${innerWidth}px`);
     return [...new Set(failures)];
   }, { minFont: MIN_FONT_PX, minTarget: MIN_TARGET_PX });
