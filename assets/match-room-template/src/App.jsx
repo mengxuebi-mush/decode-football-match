@@ -72,13 +72,6 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
 
   return (
     <div className="pitch-shell">
-      <div className="legend" aria-label={moment.legendSummary}>
-        <span><i className="england" />{matchData.match.homeTeam}</span>
-        <span><i className="norway" />{matchData.match.awayTeam}</span>
-        <span>{copy.actors}</span>
-        <span>{copy.contextPlayers}</span>
-        <span className="player-key">{moment.legendSummary}</span>
-      </div>
       <div className="pitch-frame">
         <canvas id="pitch-analysis" className="pitch" ref={canvasRef} role="img" aria-label={`${moment.title}: ${phase.label}`} aria-describedby={descriptionId} />
         <p className="sr-only" id={descriptionId}>{phase.note} {phase.players.map((player) => `${player.number} ${player.name}`).join(", ")}.</p>
@@ -97,7 +90,8 @@ function draw(canvas, ratio, players, phase) {
   const width = canvas.width / ratio;
   const height = canvas.height / ratio;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  ctx.clearRect(0, 0, width, height);
+  ctx.clearRect(0, 0, Math.max(0, width), Math.max(0, height));
+  if (width < 60 || height < 60) return;
   const pad = clamp(Math.min(width, height) * 0.045, 18, 34);
   const left = pad;
   const top = pad;
@@ -277,9 +271,19 @@ export function App() {
           ); })}
         </nav>
         <section className="analysis-panel">
-          <div className="analysis-head"><div><p className="section-label">{moment.evidenceLabel} · {moment.time}</p><h1>{moment.title}</h1><details className="evidence-menu" key={moment.id}><summary>{copy.sources} <span>{momentSources.length}</span></summary><div className="evidence-menu-list">{momentSources.map((source) => <a href={source.url} target="_blank" rel="noreferrer" key={source.id}>{source.name}<span aria-hidden="true">↗</span></a>)}</div></details></div><div className="phase-controls"><div className="phase-tabs" role="tablist" aria-busy={playing}>{moment.phases.map((phase, index) => <button role="tab" aria-controls="pitch-analysis" aria-selected={phaseIndex === index} key={phase.id} onClick={() => choosePhase(index)}>{phase.label}</button>)}</div>{moment.phases.length > 1 && <button type="button" className={`replay-button ${playing ? "playing" : ""}`} aria-label={playing ? copy.replaying : copy.replay} data-tooltip={playing ? copy.replaying : copy.replay} onClick={replay}><svg aria-hidden="true" viewBox="0 0 24 24">{playing ? <rect x="7" y="7" width="10" height="10" rx="1.5" /> : <><path d="M20 12a8 8 0 1 1-2.34-5.66L20 8" /><path d="M20 3v5h-5" /></>}</svg></button>}</div></div>
+          <div className="analysis-head"><div><p className="section-label">{moment.evidenceLabel} · {moment.time}</p><h1>{moment.title}</h1></div><div className="phase-controls"><div className="phase-tabs" role="tablist" aria-busy={playing}>{moment.phases.map((phase, index) => <button role="tab" aria-controls="pitch-analysis" aria-selected={phaseIndex === index} key={phase.id} onClick={() => choosePhase(index)}>{phase.label}</button>)}</div>{moment.phases.length > 1 && <button type="button" className={`replay-button ${playing ? "playing" : ""}`} aria-label={playing ? copy.replaying : copy.replay} data-tooltip={playing ? copy.replaying : copy.replay} onClick={replay}><svg aria-hidden="true" viewBox="0 0 24 24">{playing ? <rect x="7" y="7" width="10" height="10" rx="1.5" /> : <><path d="M20 12a8 8 0 1 1-2.34-5.66L20 8" /><path d="M20 3v5h-5" /></>}</svg></button>}</div></div>
+          <div className="analysis-meta">
+            <details className="evidence-menu" key={moment.id}><summary>{copy.sources} <span>{momentSources.length}</span></summary><div className="evidence-menu-list">{momentSources.map((source) => <a href={source.url} target="_blank" rel="noreferrer" key={source.id}>{source.name}<span aria-hidden="true">↗</span></a>)}</div></details>
+            <div className="legend" aria-label={moment.legendSummary}>
+              <span><i className="england" />{matchData.match.homeTeam}</span>
+              <span><i className="norway" />{matchData.match.awayTeam}</span>
+              <span>{copy.actors}</span>
+              <span>{copy.contextPlayers}</span>
+              <span className="player-key">{moment.legendSummary}</span>
+            </div>
+          </div>
           <Pitch moment={moment} phaseIndex={phaseIndex} transition={transition} copy={copy} />
-          {moment.concept && <section className="concept open" aria-label={moment.concept.name}><div className="concept-summary"><span className="concept-mark">↗</span><div className="concept-copy"><div className="concept-title"><strong>{moment.concept.name}</strong><em>{moment.concept.canonicalTerm}</em></div><span>{moment.concept.definition}</span><span className="concept-cue"><b>{copy.watch}</b>{moment.concept.watchCue}</span></div></div><div className="concept-details"><div className="learning-guide"><section><span>{copy.watch}</span><p>{moment.concept.watchCue}</p></section><section><span>{copy.dilemma}</span><p>{moment.concept.dilemma}</p></section><section><span>{copy.transfer}</span><p>{moment.concept.transferCue}</p></section></div></div></section>}
+          {moment.concept && <section className="concept open" aria-label={moment.concept.name}><div className="concept-summary"><span className="concept-mark">↗</span><div className="concept-copy"><div className="concept-title"><strong>{moment.concept.name}</strong><em>{moment.concept.canonicalTerm}</em></div><span>{moment.concept.definition}</span></div></div><div className="concept-details"><div className="learning-guide"><section><span>{copy.watch}</span><p>{moment.concept.watchCue}</p></section><section><span>{copy.dilemma}</span><p>{moment.concept.dilemma}</p></section><section><span>{copy.transfer}</span><p>{moment.concept.transferCue}</p></section></div></div></section>}
         </section>
       </div>
     </main>
