@@ -37,14 +37,19 @@ function lerpPlayers(from = [], to = [], progress) {
   });
 }
 
+function lerpBall(from, to, progress) {
+  return { x: mix(from.x, to.x, progress), y: mix(from.y, to.y, progress) };
+}
+
 function Pitch({ moment, phaseIndex, transition, copy }) {
   const canvasRef = useRef(null);
   const drawStateRef = useRef(null);
   const phase = moment.phases[phaseIndex];
   const prior = moment.phases[Math.max(0, phaseIndex - 1)] ?? phase;
   const players = lerpPlayers(prior.players, phase.players, transition);
+  const ball = lerpBall(prior.ball, phase.ball, transition);
   const descriptionId = `pitch-description-${moment.id}-${phase.id}`;
-  drawStateRef.current = { players, phase };
+  drawStateRef.current = { players, phase, ball };
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,7 +61,7 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
       canvas.height = Math.max(1, Math.floor(height * ratio));
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      draw(canvas, ratio, drawStateRef.current.players, drawStateRef.current.phase);
+      draw(canvas, ratio, drawStateRef.current.players, drawStateRef.current.phase, drawStateRef.current.ball);
     };
     resize();
     const observer = new ResizeObserver(resize);
@@ -67,14 +72,22 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    draw(canvas, window.devicePixelRatio || 1, players, phase);
-  }, [players, phase]);
+    draw(canvas, window.devicePixelRatio || 1, players, phase, ball);
+  }, [players, phase, ball]);
 
   return (
     <div className="pitch-shell">
+      <div className="legend" aria-label={moment.legendSummary}>
+        <span><i className="england" />{matchData.match.homeTeam}</span>
+        <span><i className="norway" />{matchData.match.awayTeam}</span>
+        <span><i className="ball-key" aria-hidden="true">⚽️</i>{copy.ball}</span>
+        <span className="actor-key">{copy.actors}</span>
+        <span className="context-key">{copy.contextPlayers}</span>
+        <span className="player-key">{moment.legendSummary}</span>
+      </div>
       <div className="pitch-frame">
-        <canvas id="pitch-analysis" className="pitch" ref={canvasRef} role="img" aria-label={`${moment.title}: ${phase.label}`} aria-describedby={descriptionId} />
-        <p className="sr-only" id={descriptionId}>{phase.note} {phase.players.map((player) => `${player.number} ${player.name}`).join(", ")}.</p>
+        <canvas id="pitch-analysis" className="pitch" ref={canvasRef} role="img" aria-label={`${moment.title}: ${phase.label}`} aria-describedby={descriptionId} data-ball-x={ball.x.toFixed(2)} data-ball-y={ball.y.toFixed(2)} />
+        <p className="sr-only" id={descriptionId}>{phase.note} {copy.ball}: {Math.round(ball.x)}, {Math.round(ball.y)}. {phase.players.map((player) => `${player.number} ${player.name}`).join(", ")}.</p>
         <div className="pitch-caption">
           <span>{phase.label}</span>
           <p>{phase.note}</p>
@@ -84,13 +97,12 @@ function Pitch({ moment, phaseIndex, transition, copy }) {
   );
 }
 
-function draw(canvas, ratio, players, phase) {
+function draw(canvas, ratio, players, phase, ball) {
   const ctx = canvas.getContext("2d");
   const width = canvas.width / ratio;
   const height = canvas.height / ratio;
   ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  ctx.clearRect(0, 0, Math.max(0, width), Math.max(0, height));
-  if (width < 60 || height < 60) return;
+  ctx.clearRect(0, 0, width, height);
   const pad = clamp(Math.min(width, height) * 0.045, 18, 34);
   const left = pad;
   const top = pad;
@@ -127,9 +139,12 @@ function draw(canvas, ratio, players, phase) {
   (phase.arrows ?? []).forEach((arrow) => drawArrow(ctx, px(arrow.from[0]), py(arrow.from[1]), px(arrow.to[0]), py(arrow.to[1]), arrow.type));
   const plottedPlayers = players.map((player) => ({ ...player, plotX: px(player.x), plotY: py(player.y) }));
   plottedPlayers.forEach((player) => drawPlayerMarker(ctx, player.plotX, player.plotY, player));
+  const displayedBall = resolveDisplayedBall(ball, plottedPlayers, { left, top, right: left + fieldW, bottom: top + fieldH });
+  const ballObstacle = { left: displayedBall.x - 13, top: displayedBall.y - 13, right: displayedBall.x + 13, bottom: displayedBall.y + 13 };
   const labelBoxes = [];
   const fieldBounds = { left, top, right: left + fieldW, bottom: top + fieldH };
-  plottedPlayers.forEach((player) => drawPlayerLabel(ctx, player, plottedPlayers, labelBoxes, fieldBounds));
+  plottedPlayers.forEach((player) => drawPlayerLabel(ctx, player, plottedPlayers, labelBoxes, fieldBounds, ballObstacle));
+  drawBall(ctx, displayedBall);
 }
 
 function drawBox(ctx, px, py, edge, mirror) {
@@ -162,7 +177,40 @@ function boxesOverlap(a, b, gap = 3) {
   return a.left < b.right + gap && a.right + gap > b.left && a.top < b.bottom + gap && a.bottom + gap > b.top;
 }
 
-function drawPlayerLabel(ctx, player, players, placed, bounds) {
+function resolveDisplayedBall(ball, players, bounds) {
+  const anchorX = clamp(ball.x, 0, 100) / 100 * (bounds.right - bounds.left) + bounds.left;
+  const anchorY = clamp(ball.y, 0, 100) / 100 * (bounds.bottom - bounds.top) + bounds.top;
+  const candidates = [[0, 0]];
+  for (const radius of [28, 36, 44, 52, 60, 72]) {
+    for (let index = 0; index < 12; index += 1) {
+      const angle = index * Math.PI / 6;
+      candidates.push([Math.cos(angle) * radius, Math.sin(angle) * radius]);
+    }
+  }
+  const valid = candidates.map(([dx, dy]) => {
+    const x = anchorX + dx;
+    const y = anchorY + dy;
+    const clearance = players.length ? Math.min(...players.map((player) => Math.hypot(x - player.plotX, y - player.plotY))) : Infinity;
+    return { x, y, clearance };
+  }).filter(({ x, y }) => x >= bounds.left + 11 && x <= bounds.right - 11 && y >= bounds.top + 11 && y <= bounds.bottom - 11);
+  const candidate = valid.find(({ clearance }) => clearance >= 28) ?? valid.reduce((best, item) => item.clearance > best.clearance ? item : best, valid[0]);
+  return { anchorX, anchorY, x: candidate.x, y: candidate.y };
+}
+
+function drawBall(ctx, ball) {
+  ctx.save();
+  if (Math.hypot(ball.x - ball.anchorX, ball.y - ball.anchorY) > 4) {
+    ctx.beginPath(); ctx.moveTo(ball.anchorX, ball.anchorY); ctx.lineTo(ball.x, ball.y);
+    ctx.setLineDash([2, 3]); ctx.strokeStyle = "rgba(215,183,104,.82)"; ctx.lineWidth = 1.5; ctx.stroke(); ctx.setLineDash([]);
+  }
+  ctx.shadowColor = "rgba(215,183,104,.65)"; ctx.shadowBlur = 8;
+  ctx.font = '21px "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif';
+  ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  ctx.fillText("⚽️", ball.x, ball.y + 1);
+  ctx.restore();
+}
+
+function drawPlayerLabel(ctx, player, players, placed, bounds, ballObstacle) {
   ctx.save();
   ctx.font = '700 14px "Atkinson Hyperlegible"';
   ctx.textBaseline = "middle";
@@ -181,6 +229,7 @@ function drawPlayerLabel(ctx, player, players, placed, bounds) {
     }
   }
   const obstacles = players.filter((item) => item.id !== player.id).map((item) => ({ left: item.plotX - 18, top: item.plotY - 18, right: item.plotX + 18, bottom: item.plotY + 18 }));
+  obstacles.push(ballObstacle);
   const fits = (box) => box.left >= bounds.left && box.right <= bounds.right && box.top >= bounds.top && box.bottom <= bounds.bottom && !placed.some((other) => boxesOverlap(box, other)) && !obstacles.some((other) => boxesOverlap(box, other));
   const box = candidates.find(fits) ?? candidates.map((candidate) => ({
     ...candidate,
@@ -270,18 +319,9 @@ export function App() {
           ); })}
         </nav>
         <section className="analysis-panel">
-          <div className="analysis-head"><div><p className="section-label">{moment.evidenceLabel} · {moment.time}</p><h1>{moment.title}</h1></div><div className="phase-controls"><div className="phase-tabs" role="tablist" aria-busy={playing}>{moment.phases.map((phase, index) => <button role="tab" aria-controls="pitch-analysis" aria-selected={phaseIndex === index} key={phase.id} onClick={() => choosePhase(index)}>{phase.label}</button>)}</div>{moment.phases.length > 1 && <button type="button" className={`replay-button ${playing ? "playing" : ""}`} aria-label={playing ? copy.replaying : copy.replay} data-tooltip={playing ? copy.replaying : copy.replay} onClick={replay}><svg aria-hidden="true" viewBox="0 0 24 24">{playing ? <rect x="7" y="7" width="10" height="10" rx="1.5" /> : <><path d="M20 12a8 8 0 1 1-2.34-5.66L20 8" /><path d="M20 3v5h-5" /></>}</svg></button>}</div></div>
-          <div className="analysis-meta">
-            <details className="evidence-menu" key={moment.id}><summary>{copy.sources} <span>{momentSources.length}</span></summary><div className="evidence-menu-list">{momentSources.map((source) => <a href={source.url} target="_blank" rel="noreferrer" key={source.id}>{source.name}<span aria-hidden="true">↗</span></a>)}</div></details>
-            <div className="legend" aria-label={moment.legendSummary}>
-              <span><i className="england" />{matchData.match.homeTeam}</span>
-              <span><i className="norway" />{matchData.match.awayTeam}</span>
-              <span>{copy.actors}</span>
-              <span>{copy.contextPlayers}</span>
-              <span className="player-key">{moment.legendSummary}</span>
-            </div>
-          </div>
+          <div className="analysis-head"><div><p className="section-label">{moment.evidenceLabel} · {moment.time}</p><h1>{moment.title}</h1><details className="evidence-menu" key={moment.id}><summary>{copy.sources} <span>{momentSources.length}</span></summary><div className="evidence-menu-list">{momentSources.map((source) => <a href={source.url} target="_blank" rel="noreferrer" key={source.id}>{source.name}<span aria-hidden="true">↗</span></a>)}</div></details></div><div className="phase-controls"><div className="phase-tabs" role="tablist" aria-busy={playing}>{moment.phases.map((phase, index) => <button role="tab" aria-controls="pitch-analysis" aria-selected={phaseIndex === index} key={phase.id} onClick={() => choosePhase(index)}>{phase.label}</button>)}</div>{moment.phases.length > 1 && <button type="button" className={`replay-button ${playing ? "playing" : ""}`} aria-label={playing ? copy.replaying : copy.replay} data-tooltip={playing ? copy.replaying : copy.replay} onClick={replay}><svg aria-hidden="true" viewBox="0 0 24 24">{playing ? <rect x="7" y="7" width="10" height="10" rx="1.5" /> : <><path d="M20 12a8 8 0 1 1-2.34-5.66L20 8" /><path d="M20 3v5h-5" /></>}</svg></button>}</div></div>
           <Pitch moment={moment} phaseIndex={phaseIndex} transition={transition} copy={copy} />
+          {moment.formationGuide && <section className="concept open formation-analysis" aria-label={moment.formationGuide.title}><div className="concept-summary"><span className="concept-mark">↗</span><div className="concept-copy"><div className="concept-title"><strong>{moment.formationGuide.title}</strong><em>{moment.formationGuide.canonicalTerm}</em></div><span>{moment.formationGuide.definition}</span></div></div><div className="concept-details"><div className="formation-guide"><p className="formation-guide-note">{copy.formationNote}</p><div className="formation-guide-grid">{moment.formationGuide.teams.map((guide) => { const source = sourceMap.get(guide.sourceId); return <article className={`formation-guide-card ${guide.side}`} key={guide.side}><div className="formation-guide-head"><strong>{guide.name}</strong><em>{guide.shape}</em></div><div className="formation-guide-row"><b>{copy.formationAttack}</b><span>{guide.attack}</span></div><div className="formation-guide-row"><b>{copy.formationDefend}</b><span>{guide.defend}</span></div><div className="formation-guide-row risk"><b>{copy.formationTradeoff}</b><span>{guide.tradeoff}</span></div>{source && <a href={source.url} target="_blank" rel="noreferrer">{source.name}<span aria-hidden="true">↗</span></a>}</article>; })}</div></div></div></section>}
           {moment.concept && <section className="concept open" aria-label={moment.concept.name}><div className="concept-summary"><span className="concept-mark">↗</span><div className="concept-copy"><div className="concept-title"><strong>{moment.concept.name}</strong><em>{moment.concept.canonicalTerm}</em></div><span>{moment.concept.definition}</span></div></div><div className="concept-details"><div className="learning-guide"><section><span>{copy.watch}</span><p>{moment.concept.watchCue}</p></section><section><span>{copy.dilemma}</span><p>{moment.concept.dilemma}</p></section><section><span>{copy.transfer}</span><p>{moment.concept.transferCue}</p></section></div></div></section>}
         </section>
       </div>

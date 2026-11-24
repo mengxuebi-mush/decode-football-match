@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "locale": "zh-CN",
   "match": {
     "id": "north-city-south-united-demo",
@@ -66,6 +66,15 @@
       ],
       "evidenceLabel": "演示背景",
       "legendSummary": "主队 4–2–3–1 · 客队 4–3–3",
+      "formationGuide": {
+        "title": "两套阵型如何运作",
+        "canonicalTerm": "Formation analysis",
+        "definition": "比较双方如何持球推进、无球防守，以及各自承担的结构代价。",
+        "teams": [
+          { "side": "home", "name": "北城队", "shape": "4–2–3–1", "attack": "双后腰帮助推进，10号位在两线之间接球。", "defend": "两名后腰保护中卫身前，并能横向支援。", "tradeoff": "单前锋可能被孤立，边后卫同时前压会暴露转换通道。", "sourceId": "demo-concept" },
+          { "side": "away", "name": "南联队", "shape": "4–3–3", "attack": "中场三角提供传球角度，边锋拉开宽度。", "defend": "前场三人领衔压迫，中场三角保护中路。", "tradeoff": "多人前插时，边锋与边后卫之间可能出现空当。", "sourceId": "demo-concept" }
+        ]
+      },
       "phases": [
         {
           "id": "shape",
@@ -340,7 +349,12 @@
             }
           ],
           "arrows": [],
-          "zones": []
+          "zones": [],
+          "ball": {
+            "x": 8,
+            "y": 50,
+            "playerId": "h-1"
+          }
         }
       ]
     },
@@ -459,7 +473,12 @@
               "radius": 14,
               "label": "二打一核心区"
             }
-          ]
+          ],
+          "ball": {
+            "x": 54,
+            "y": 68,
+            "playerId": "h-7"
+          }
         },
         {
           "id": "decision",
@@ -555,7 +574,12 @@
               "radius": 9,
               "label": "传球线路"
             }
-          ]
+          ],
+          "ball": {
+            "x": 68,
+            "y": 62,
+            "playerId": "h-7"
+          }
         },
         {
           "id": "outcome",
@@ -651,7 +675,12 @@
               "radius": 9,
               "label": "空位球员"
             }
-          ]
+          ],
+          "ball": {
+            "x": 78,
+            "y": 59,
+            "playerId": "h-7"
+          }
         }
       ]
     },
@@ -761,7 +790,12 @@
               "radius": 10,
               "label": "内线通道"
             }
-          ]
+          ],
+          "ball": {
+            "x": 58,
+            "y": 24,
+            "playerId": "h-11"
+          }
         },
         {
           "id": "trigger",
@@ -848,7 +882,12 @@
               "radius": 10,
               "label": "被打开的空间"
             }
-          ]
+          ],
+          "ball": {
+            "x": 64,
+            "y": 26,
+            "playerId": "h-11"
+          }
         },
         {
           "id": "outcome",
@@ -935,7 +974,12 @@
               "radius": 9,
               "label": "内线通道"
             }
-          ]
+          ],
+          "ball": {
+            "x": 75,
+            "y": 42,
+            "playerId": "h-11"
+          }
         }
       ]
     },
@@ -1045,7 +1089,12 @@
               "radius": 12,
               "label": "3v2"
             }
-          ]
+          ],
+          "ball": {
+            "x": 54,
+            "y": 20,
+            "playerId": "h-3"
+          }
         },
         {
           "id": "decision",
@@ -1132,7 +1181,12 @@
               "radius": 8,
               "label": "空位球员"
             }
-          ]
+          ],
+          "ball": {
+            "x": 66,
+            "y": 35,
+            "playerId": "h-8"
+          }
         },
         {
           "id": "outcome",
@@ -1219,7 +1273,12 @@
               "radius": 9,
               "label": "空位球员"
             }
-          ]
+          ],
+          "ball": {
+            "x": 84,
+            "y": 14,
+            "playerId": "h-11"
+          }
         }
       ]
     },
@@ -1329,7 +1388,12 @@
               "radius": 13,
               "label": "剩余防守"
             }
-          ]
+          ],
+          "ball": {
+            "x": 75,
+            "y": 22,
+            "playerId": "h-11"
+          }
         },
         {
           "id": "turnover",
@@ -1416,7 +1480,11 @@
               "radius": 12,
               "label": "保护三角"
             }
-          ]
+          ],
+          "ball": {
+            "x": 84,
+            "y": 30
+          }
         },
         {
           "id": "outcome",
@@ -1503,7 +1571,12 @@
               "radius": 11,
               "label": "反击受控"
             }
-          ]
+          ],
+          "ball": {
+            "x": 58,
+            "y": 38,
+            "playerId": "h-5"
+          }
         }
       ]
     },
@@ -1601,7 +1674,12 @@
               "radius": 13,
               "label": "球附近的密集区域"
             }
-          ]
+          ],
+          "ball": {
+            "x": 70,
+            "y": 48,
+            "playerId": "h-10"
+          }
         },
         {
           "id": "collapse",
@@ -1688,7 +1766,12 @@
               "radius": 10,
               "label": "反抢包围圈"
             }
-          ]
+          ],
+          "ball": {
+            "x": 73,
+            "y": 47,
+            "playerId": "h-10"
+          }
         },
         {
           "id": "outcome",
@@ -1763,7 +1846,12 @@
               "radius": 9,
               "label": "出球受阻"
             }
-          ]
+          ],
+          "ball": {
+            "x": 77,
+            "y": 50,
+            "playerId": "a-6"
+          }
         }
       ]
     }

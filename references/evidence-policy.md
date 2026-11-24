@@ -43,6 +43,8 @@ Do not infer as fact:
 - a timestamp not confirmed by the chosen video or report;
 - a foul, offside, handball, or sanction beyond the official decision.
 
+The ball must still be shown in every spatial phase because it anchors the tactical explanation. Place it from visible video evidence. If the frame or edit does not reveal an exact location, use an approximate teaching coordinate, omit `ball.playerId` unless control is clear, and cover the approximation with the phase's teaching-reconstruction disclosure. Never derive a hidden ball location solely from an arrow or assumed player intention.
+
 If only an analyst supports a claim, write “Analysis by … describes …” rather than presenting it as official. If spacing is reconstructed, label it as a teaching reconstruction and avoid precise-sounding coordinates.
 
 Omit a moment when the available evidence cannot support the spatial lesson. Fewer trustworthy moments are better than a complete-looking timeline.

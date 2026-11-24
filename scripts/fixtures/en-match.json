@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "locale": "en",
   "match": {
     "id": "north-city-south-united-demo",
@@ -66,6 +66,15 @@
       ],
       "evidenceLabel": "Demo context",
       "legendSummary": "Home 4–2–3–1 · Away 4–3–3",
+      "formationGuide": {
+        "title": "How the two shapes behave",
+        "canonicalTerm": "Formation analysis",
+        "definition": "Compare how each team progresses, defends, and accepts structural risk.",
+        "teams": [
+          { "side": "home", "name": "North City", "shape": "4–2–3–1", "attack": "The double pivot supports progression and the number 10 receives between the lines.", "defend": "Two holding midfielders protect the centre-backs.", "tradeoff": "The striker can become isolated and advanced full-backs expose transition lanes.", "sourceId": "demo-concept" },
+          { "side": "away", "name": "South United", "shape": "4–3–3", "attack": "The midfield triangle creates central angles while the wingers hold width.", "defend": "The front three lead pressure with a midfield triangle behind.", "tradeoff": "Space can open between winger and full-back when runners advance.", "sourceId": "demo-concept" }
+        ]
+      },
       "phases": [
         {
           "id": "shape",
@@ -340,7 +349,12 @@
             }
           ],
           "arrows": [],
-          "zones": []
+          "zones": [],
+          "ball": {
+            "x": 8,
+            "y": 50,
+            "playerId": "h-1"
+          }
         }
       ]
     },
@@ -459,7 +473,12 @@
               "radius": 14,
               "label": "2v1 area"
             }
-          ]
+          ],
+          "ball": {
+            "x": 54,
+            "y": 68,
+            "playerId": "h-7"
+          }
         },
         {
           "id": "decision",
@@ -555,7 +574,12 @@
               "radius": 9,
               "label": "Passing lane"
             }
-          ]
+          ],
+          "ball": {
+            "x": 68,
+            "y": 62,
+            "playerId": "h-7"
+          }
         },
         {
           "id": "outcome",
@@ -651,7 +675,12 @@
               "radius": 9,
               "label": "Free player"
             }
-          ]
+          ],
+          "ball": {
+            "x": 78,
+            "y": 59,
+            "playerId": "h-7"
+          }
         }
       ]
     },
@@ -761,7 +790,12 @@
               "radius": 10,
               "label": "Inside lane"
             }
-          ]
+          ],
+          "ball": {
+            "x": 58,
+            "y": 24,
+            "playerId": "h-11"
+          }
         },
         {
           "id": "trigger",
@@ -848,7 +882,12 @@
               "radius": 10,
               "label": "Opened space"
             }
-          ]
+          ],
+          "ball": {
+            "x": 64,
+            "y": 26,
+            "playerId": "h-11"
+          }
         },
         {
           "id": "outcome",
@@ -935,7 +974,12 @@
               "radius": 9,
               "label": "Inside lane"
             }
-          ]
+          ],
+          "ball": {
+            "x": 75,
+            "y": 42,
+            "playerId": "h-11"
+          }
         }
       ]
     },
@@ -1045,7 +1089,12 @@
               "radius": 12,
               "label": "3v2"
             }
-          ]
+          ],
+          "ball": {
+            "x": 54,
+            "y": 20,
+            "playerId": "h-3"
+          }
         },
         {
           "id": "decision",
@@ -1132,7 +1181,12 @@
               "radius": 8,
               "label": "Free player"
             }
-          ]
+          ],
+          "ball": {
+            "x": 66,
+            "y": 35,
+            "playerId": "h-8"
+          }
         },
         {
           "id": "outcome",
@@ -1219,7 +1273,12 @@
               "radius": 9,
               "label": "Free player"
             }
-          ]
+          ],
+          "ball": {
+            "x": 84,
+            "y": 14,
+            "playerId": "h-11"
+          }
         }
       ]
     },
@@ -1329,7 +1388,12 @@
               "radius": 13,
               "label": "Rest defense"
             }
-          ]
+          ],
+          "ball": {
+            "x": 75,
+            "y": 22,
+            "playerId": "h-11"
+          }
         },
         {
           "id": "turnover",
@@ -1416,7 +1480,11 @@
               "radius": 12,
               "label": "Cover triangle"
             }
-          ]
+          ],
+          "ball": {
+            "x": 84,
+            "y": 30
+          }
         },
         {
           "id": "outcome",
@@ -1503,7 +1571,12 @@
               "radius": 11,
               "label": "Counter controlled"
             }
-          ]
+          ],
+          "ball": {
+            "x": 58,
+            "y": 38,
+            "playerId": "h-5"
+          }
         }
       ]
     },
@@ -1601,7 +1674,12 @@
               "radius": 13,
               "label": "Crowded ball zone"
             }
-          ]
+          ],
+          "ball": {
+            "x": 70,
+            "y": 48,
+            "playerId": "h-10"
+          }
         },
         {
           "id": "collapse",
@@ -1688,7 +1766,12 @@
               "radius": 10,
               "label": "Pressing cage"
             }
-          ]
+          ],
+          "ball": {
+            "x": 73,
+            "y": 47,
+            "playerId": "h-10"
+          }
         },
         {
           "id": "outcome",
@@ -1763,7 +1846,12 @@
               "radius": 9,
               "label": "Escape blocked"
             }
-          ]
+          ],
+          "ball": {
+            "x": 77,
+            "y": 50,
+            "playerId": "a-6"
+          }
         }
       ]
     }

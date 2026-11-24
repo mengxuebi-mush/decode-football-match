@@ -62,6 +62,8 @@ Apply `references/evidence-policy.md`. Omit unsupported formations, positions, t
 
 Put `Match context` before `Key tactical plays`. Include only moments that have reliable support and teach a reusable spatial idea. A goal is not automatically a tactical moment.
 
+Make the first context moment a formation comparison. Beyond plotting both starting shapes, add a sourced `formationGuide` that compares how each team progresses in possession, defends without the ball, and what structural trade-off its shape creates. Treat formations as starting references rather than frozen positions; attribute match-specific behavior to named analysis.
+
 Build a candidate list from the whole available video before drawing. Rank by evidence strength, tactical reusability, spatial clarity, and variety. Remove administrative events, spatially unclear moments, and plays that merely repeat an already-covered idea. Include every remaining meaningful play; stop when another play adds no new tactical understanding. Do not impose a numeric maximum.
 
 Require at least five surviving plays. If the first highlight yields fewer than five, search for a longer or alternative highlight and supporting reliable material. If fewer than five still survive, stop and report that the source material is insufficient; never fabricate or weaken the evidence gate to reach the minimum.
@@ -78,7 +80,11 @@ Prefer concepts such as decoy run, side overload, local overload, third-player r
 
 ### 5. Build three spatial phases
 
-Create exactly three materially different phases for every tactical play. Preserve stable player IDs across phases. Show the relevant ball carrier, supporting attackers, defenders, cover, goalkeeper, defensive units, movement, passing options, and highlighted space when supported.
+Create exactly three materially different phases for every tactical play. Preserve stable player IDs across phases. Every phase must include an explicit `ball` position; never rely on arrows or player order to infer it. Show the relevant ball carrier, supporting attackers, defenders, cover, goalkeeper, defensive units, movement, passing options, and highlighted space when supported.
+
+Give each phase control a compact, action-first label: one or two words, no sentence fragments, player names, or explanatory clauses. Keep the full tactical explanation in `phase.note`, which appears in the pitch caption.
+
+Treat the ball as the primary spatial anchor. Place it from visible video evidence when possible. When the exact location is uncertain, use an approximate teaching coordinate and keep the reconstruction disclosure; never imply tracking precision. Set `ball.playerId` only when the player is visibly controlling the ball. Across a tactical play, the ball must occupy at least two distinct positions, and replay must interpolate its movement continuously with the players.
 
 Use solid actors for recorded event participants and faded contextual players for teaching context. Mark reconstructed spacing and interpolation as teaching motion, not tracking data. Do not claim exact coordinates.
 
@@ -104,7 +110,7 @@ npm install
 npm run test:ui
 ```
 
-`npm run test:ui` builds the current source, selects every moment, and tests desktop, short-laptop, narrow-desktop, mobile, compact-mobile, and 200% text-zoom layouts. Resolve every validation error; do not open or deliver a room that fails. The validator enforces a 14px minimum for visible DOM and canvas text, readable contrast, 44px targets, non-overlapping timeline content, document overflow protection, a legible pitch ratio, and an initially visible learning-card preview on height-constrained laptops.
+`npm run test:ui` builds the current source, selects every moment, and tests desktop, short-laptop, narrow-desktop, mobile, compact-mobile, and 200% text-zoom layouts. Resolve every validation error; do not open or deliver a room that fails. The validator enforces typography and contrast, touch targets, non-overlap, overflow protection, pitch proportions, formation-row alignment, single-instance concept cues, and a visible learning-card preview on height-constrained laptops.
 
 Inspect the generated screenshots in `<output-dir>/test-results/` against `assets/visual-baselines/desktop.png`, `narrow-desktop.png`, and `mobile.png`. Check the actual localized content, especially long source names, moment titles, concepts, player labels, and phase names. Verify that selecting a tactical play automatically starts its three-phase sequence, manual phase selection interrupts it, replay restarts from phase one, playback stops after the final interpolation, reduced-motion fallback works, internal timeline and pitch scrolling work, and URL state such as `?moment=two-v-one&phase=decision` remains addressable without forced autoplay.
 
@@ -125,8 +131,11 @@ Finish only when:
 - `keyPlaySelection.included` matches the timeline, is at least five, and was selected from the video without a default target or maximum;
 - unsupported claims have been removed;
 - context precedes plays;
+- the formation context compares both teams' in-possession behavior, out-of-possession behavior, and structural trade-off;
 - every play has exactly three meaningful phases and stable identities;
 - selecting any tactical play automatically plays all three phases with continuous player motion;
+- every phase has a visible, explicit ball position and every tactical play animates the ball between at least two distinct positions;
+- every phase control uses a compact label that remains on one line at all tested widths;
 - every concept has definition, watch cue, dilemma, and transfer cue;
 - both validation and production build pass;
 - the rendered UI passes `npm run test:ui` for every moment, including the 14px type floor, contrast, 44px targets, overlap, overflow, pitch-ratio, and 200% zoom checks;

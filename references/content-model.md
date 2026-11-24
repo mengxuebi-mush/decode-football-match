@@ -6,7 +6,7 @@
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "locale": "en",
   "match": {},
   "videoSelection": {},
@@ -110,16 +110,72 @@ Each `play` also requires `concept`:
 
 For `zh-CN`, `name` is Chinese and `canonicalTerm` remains English.
 
+## Formation analysis
+
+Exactly one `context` moment requires a `formationGuide` comparing both teams:
+
+```json
+{
+  "formationGuide": {
+    "title": "How the two shapes behave",
+    "canonicalTerm": "Formation analysis",
+    "definition": "...",
+    "teams": [
+      {
+        "side": "home",
+        "name": "England",
+        "shape": "4–2–3–1",
+        "attack": "...",
+        "defend": "...",
+        "tradeoff": "...",
+        "sourceId": "attributed-analysis"
+      },
+      {
+        "side": "away",
+        "name": "Argentina",
+        "shape": "4–3–3",
+        "attack": "...",
+        "defend": "...",
+        "tradeoff": "...",
+        "sourceId": "attributed-analysis"
+      }
+    ]
+  }
+}
+```
+
+Use one `home` and one `away` entry. Each `sourceId` must reference the source that supports that team's shape or behavior. Distinguish general structural tendencies from match-specific analysis and never present the formation as a fixed tracking position.
+
 ## Phases
 
 Every play has exactly three phases. Each phase requires:
 
 - `id`: stable URL token such as `setup`, `decision`, `outcome`.
-- `label`, `note`: localized strings.
+- `label`: compact localized control text. Use one or two action-first words, at most 12 visible characters for English or 6 characters for Chinese. Do not include player names, explanatory clauses, or sentence-like copy.
+- `note`: the full localized phase explanation shown in the pitch caption.
+- `ball`: explicit ball position for this phase.
 - `players`: array of player objects.
 - optional `arrows`, `lines`, and `zones`.
 
 Tactical plays automatically play all three phases when selected. Context moments may have one to three phases and do not autoplay by default.
+
+Good English labels include `Block`, `Break line`, and `Finish`; good Chinese labels include `落位`, `破线`, and `射门`. Put detail such as “Messi controls and finishes with his left foot” in `note`, never in the control label.
+
+### Ball
+
+```json
+{
+  "x": 62,
+  "y": 48,
+  "playerId": "eng-10"
+}
+```
+
+- `x` and `y` are required teaching coordinates from 0 to 100, not tracking data.
+- `playerId` is optional. Include it only when that phase clearly shows a listed player controlling the ball; it must match a player ID in the same phase.
+- Do not infer ball position from the final arrow, the first actor, or player order. Author it explicitly from the visible sequence.
+- A tactical play must contain at least two distinct ball positions across its three phases.
+- Ball movement between phases is teaching interpolation unless tracking data is explicitly available and sourced.
 
 ### Player
 

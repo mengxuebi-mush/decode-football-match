@@ -10,7 +10,7 @@ The files in `assets/match-room-template/` are the fixed interface. Populate dat
 - Typography is quiet and editorial. The match and pitch dominate; chrome recedes.
 - Use the bundled Atkinson Hyperlegible files for Latin text, with system Chinese fallbacks. Do not fetch fonts at runtime.
 - No visible interface, timeline, teaching, legend, or canvas text may render below 14px.
-- Keep the replay action as a borderless 44px icon-only button immediately after the three phase tabs. Give it an accessible name and a visible hover/focus tooltip. Moment titles stay on one line when the analysis width can contain them and wrap naturally otherwise; a title must never collide with or slide under the phase controls at any width.
+- Keep the replay action as a borderless 44px icon-only button immediately after the three phase tabs. Give it an accessible name and a visible hover/focus tooltip. Keep moment titles on one line when the desktop analysis width can contain them; restore normal wrapping at narrow breakpoints.
 - Normal text must meet a 4.5:1 contrast ratio. Large text and essential graphical controls must meet 3:1. Do not lower contrast by applying opacity to a parent containing text.
 
 ## Desktop hierarchy
@@ -24,7 +24,7 @@ Use one viewport with internal scrolling:
 
 Place `Match context` before `Key tactical plays`. Never add an embedded fake chat panel.
 
-Group every source for the selected moment inside one compact localized `Sources` dropdown beneath the analysis title. Show the source count on the closed control, preserve every direct source link inside the open menu, and overlay the menu without moving or shrinking the pitch. The dropdown shares one compact meta row with the pitch legend — dropdown at the inline start, legend right-aligned — so the legend does not consume a separate full-width bar; the row stacks vertically at narrow widths.
+Group every source for the selected moment inside one compact localized `Sources` dropdown beneath the analysis title. Show the source count on the closed control, preserve every direct source link inside the open menu, and overlay the menu without moving or shrinking the pitch.
 
 Render the full organically selected key-play set in the timeline. Require at least five plays and impose no UI maximum; the timeline scrolls internally as needed. Do not truncate the set merely to keep the timeline short.
 
@@ -33,8 +33,8 @@ Timeline cards show only the match time, plain-language moment title, and reusab
 ## Pitch anatomy
 
 - Render alternating vertical grass stripes.
-- Put the legend in the shared meta row directly above the pitch (right-aligned beside the `Sources` dropdown), always above the plotted action.
-- Do not draw an additional outer border around the pitch shell. The pitch's own field boundary provides sufficient containment.
+- Put the legend above plotted action, at the top of the pitch.
+- Do not draw an additional outer border around the pitch shell. The field boundary already contains the diagram.
 - Show numbered circles and player names.
 - Show relevant attacking support, defenders, cover, goalkeeper, defensive lines, arrows, and highlighted space.
 - Use solid opacity for event actors and faded opacity for contextual teaching players.
@@ -51,7 +51,7 @@ Timeline cards show only the match time, plain-language moment title, and reusab
 - Manual phase selection interrupts autoplay immediately.
 - Replay stops on the final phase.
 - Under `prefers-reduced-motion: reduce`, skip interpolation and update states immediately.
-- Disclose teaching reconstruction through the selected moment's registered source and evidence metadata near the title, never as a persistent label over the pitch and never as tracking data.
+- Disclose teaching reconstruction through registered source and evidence metadata near the title, never as a persistent label over the pitch and never as tracking data.
 
 ## Learning card
 
@@ -65,12 +65,16 @@ Keep the tactical-learning card permanently expanded beneath the pitch. Show:
 
 Do not use the card for source provenance labels such as “Verified sequence.” Sources belong near the moment title.
 
-Guide body text (`What to watch`, `Key dilemma`, `Recognize it next time`) uses the 16px body size, never the 14px floor. Show each piece of concept content exactly once: the summary carries the name, canonical term, and definition; the guide cells carry the cues. Never duplicate a cue in the card summary.
+Guide body text (`What to watch`, `Key dilemma`, `Recognize it next time`) uses the 16px body size, never the 14px floor. Show each concept field exactly once: the summary carries the name, canonical term, and definition; the guide cells carry the three cues. Never duplicate a cue in the summary.
+
+The formation context uses the same expanded learning-card surface. Compare both teams side by side on desktop and stack them on mobile. For each team show its shape, in-possession behavior, out-of-possession behavior, structural trade-off, and a direct source link. Do not reduce formation analysis to a diagram or formation number alone.
+
+On desktop, align the two formation cards to shared row baselines. Use one stable label column within each card so all three explanations start at the same horizontal position; stack label over copy on mobile.
 
 ## Responsive behavior
 
 - Keep the pitch primary at every size.
-- On wide but height-constrained laptops, size the pitch from both the available width and the analysis-panel height. At initial scroll, preserve at least a 64px preview of the expanded learning card below the pitch; do not make users discover the teaching content only by scrolling.
+- On wide but height-constrained laptops, size the pitch from both available width and analysis-panel height. At initial scroll, preserve at least a 64px preview of the expanded learning card below the pitch.
 - Desktop uses a fixed viewport; timeline and learning card scroll internally when needed.
 - At tablet width, move the timeline into a horizontal rail above the pitch.
 - On mobile, simplify secondary chrome, retain phase controls and concept content, and avoid an excessively tall document.
@@ -90,7 +94,11 @@ The generated room is not complete unless the validator confirms:
 - timeline rows do not overlap or clip;
 - localized content does not create document-level horizontal overflow;
 - the pitch retains a readable landscape ratio;
+- the pitch shell has no redundant divider or persistent reconstruction label;
+- a short laptop initially reveals at least 64px of the expanded learning card;
+- learning-guide body copy stays at 16px and appears only once;
 - all generated screenshots have been reviewed against the approved desktop, narrow-desktop, and mobile baselines.
+- the formation moment visibly renders both team-analysis cards and their source links with aligned comparison rows.
 
 Test the actual generated English or Chinese content, not only the bundled demo. Long player names, translated concepts, phase names, evidence links, and source names must all survive the same checks.
 

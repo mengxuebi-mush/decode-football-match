@@ -9,11 +9,17 @@ export const dictionaries = {
     sources: "Sources",
     home: "Home",
     away: "Away",
+    ball: "Ball",
     actors: "solid = event actors",
     contextPlayers: "faded = teaching context",
+    reconstruction: "Teaching reconstruction · not tracking data",
     watch: "WHAT TO WATCH",
     dilemma: "KEY DILEMMA",
     transfer: "RECOGNIZE IT NEXT TIME",
+    formationAttack: "In possession",
+    formationDefend: "Out of possession",
+    formationTradeoff: "Structural trade-off",
+    formationNote: "Attributed structural tendencies — not tracking data",
     noHighlight: "No verified highlight available"
   },
   "zh-CN": {
@@ -26,11 +32,17 @@ export const dictionaries = {
     sources: "来源",
     home: "主队",
     away: "客队",
+    ball: "球",
     actors: "实心 = 回合参与者",
     contextPlayers: "淡色 = 教学情境球员",
+    reconstruction: "教学空间示意 · 非追踪数据",
     watch: "看哪里",
     dilemma: "关键两难",
     transfer: "下次怎么认",
+    formationAttack: "持球推进",
+    formationDefend: "无球防守",
+    formationTradeoff: "结构代价",
+    formationNote: "署名分析中的结构倾向 · 非追踪数据",
     noHighlight: "暂无可核实的比赛集锦"
   }
 };

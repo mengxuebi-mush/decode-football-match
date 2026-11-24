@@ -50,6 +50,32 @@ function validatePlayer(player, at) {
   }
 }
 
+function validateFormationGuide(guide, sourceIds, at) {
+  if (!guide || typeof guide !== "object" || Array.isArray(guide)) { fail(at, "is required on one formation context moment"); return; }
+  for (const key of ["title", "canonicalTerm", "definition"]) requiredString(guide[key], `${at}.${key}`);
+  if (!Array.isArray(guide.teams) || guide.teams.length !== 2) { fail(`${at}.teams`, "must compare exactly the home and away teams"); return; }
+  const sides = new Set();
+  guide.teams.forEach((team, index) => {
+    const teamAt = `${at}.teams[${index}]`;
+    for (const key of ["name", "shape", "attack", "defend", "tradeoff", "sourceId"]) requiredString(team[key], `${teamAt}.${key}`);
+    if (!TEAMS.has(team.side)) fail(`${teamAt}.side`, "must be home or away");
+    sides.add(team.side);
+    if (!sourceIds.has(team.sourceId)) fail(`${teamAt}.sourceId`, "must reference a registered source");
+  });
+  if (!sides.has("home") || !sides.has("away") || sides.size !== 2) fail(`${at}.teams`, "must include one home and one away analysis");
+}
+
+function validateBall(ball, players, at) {
+  if (!ball || typeof ball !== "object" || Array.isArray(ball)) { fail(at, "is required and must be an object"); return; }
+  for (const coordinate of ["x", "y"]) {
+    if (typeof ball[coordinate] !== "number" || ball[coordinate] < 0 || ball[coordinate] > 100) fail(`${at}.${coordinate}`, "must be a number from 0 to 100");
+  }
+  if (Object.hasOwn(ball, "playerId")) {
+    requiredString(ball.playerId, `${at}.playerId`);
+    if (typeof ball.playerId === "string" && !players.some((player) => player.id === ball.playerId)) fail(`${at}.playerId`, "must reference a player in the same phase");
+  }
+}
+
 function spatialDifference(a, b) {
   const before = new Map(a.players.map((player) => [player.id, player]));
   let shared = 0;
@@ -64,15 +90,23 @@ function spatialDifference(a, b) {
   return { shared, meaningful: maxDistance >= 3 || structureChanged };
 }
 
-function validatePhase(phase, at) {
+function validatePhase(phase, at, locale) {
   requiredString(phase.id, `${at}.id`);
   requiredString(phase.label, `${at}.label`);
   requiredString(phase.note, `${at}.note`);
+  if (typeof phase.label === "string" && phase.label.trim()) {
+    const label = phase.label.trim();
+    const visibleLength = Array.from(label).length;
+    const limit = locale === "zh-CN" ? 6 : 12;
+    if (visibleLength > limit) fail(`${at}.label`, `must be compact enough for one-line phase controls (${limit} characters maximum for ${locale})`);
+    if (locale === "en" && label.split(/\s+/u).length > 2) fail(`${at}.label`, "must use one or two words; move explanation to phase.note");
+  }
   if (!Array.isArray(phase.players) || !phase.players.length) fail(`${at}.players`, "must contain players");
   else {
     const ids = new Set();
     phase.players.forEach((player, index) => { validatePlayer(player, `${at}.players[${index}]`); if (ids.has(player.id)) fail(`${at}.players[${index}].id`, "duplicates another player in this phase"); ids.add(player.id); });
   }
+  validateBall(phase.ball, Array.isArray(phase.players) ? phase.players : [], `${at}.ball`);
   (phase.arrows ?? []).forEach((arrow, index) => {
     const arrowAt = `${at}.arrows[${index}]`;
     if (!ARROWS.has(arrow.type)) fail(`${arrowAt}.type`, "unsupported arrow type");
@@ -81,7 +115,7 @@ function validatePhase(phase, at) {
 }
 
 function validate(data) {
-  if (data.schemaVersion !== 1) fail("schemaVersion", "must equal 1");
+  if (data.schemaVersion !== 2) fail("schemaVersion", "must equal 2");
   if (!SUPPORTED_LOCALES.has(data.locale)) fail("locale", "must be en or zh-CN");
   for (const key of ["id", "homeTeam", "awayTeam", "score", "competition", "subtitle", "sourceDisclosure"]) requiredString(data.match?.[key], `match.${key}`);
   if (data.match?.highlightUrl && !validUrl(data.match.highlightUrl)) fail("match.highlightUrl", "must be an http(s) URL or empty");
@@ -142,6 +176,7 @@ function validate(data) {
   const momentIds = new Set();
   let seenPlay = false;
   let playCount = 0;
+  let formationGuideCount = 0;
   for (const [index, moment] of (data.moments ?? []).entries()) {
     const at = `moments[${index}]`;
     for (const key of ["id", "time", "short", "title", "evidenceLabel", "legendSummary"]) requiredString(moment[key], `${at}.${key}`);
@@ -150,17 +185,22 @@ function validate(data) {
     if (!GROUPS.has(moment.group)) fail(`${at}.group`, "must be context or play");
     if (moment.group === "play") { seenPlay = true; playCount += 1; }
     if (moment.group === "context" && seenPlay) fail(`${at}.group`, "context moments must precede tactical plays");
+    if (moment.formationGuide) { formationGuideCount += 1; validateFormationGuide(moment.formationGuide, sourceIds, `${at}.formationGuide`); }
     if (!Array.isArray(moment.sourceIds) || !moment.sourceIds.length) fail(`${at}.sourceIds`, "every match-specific moment requires a source");
     else moment.sourceIds.forEach((id, sourceIndex) => { if (!sourceIds.has(id)) fail(`${at}.sourceIds[${sourceIndex}]`, "does not reference a registered source"); });
     if (!Array.isArray(moment.phases) || !moment.phases.length) fail(`${at}.phases`, "must contain phases");
     else {
       if (moment.group === "play" && moment.phases.length !== 3) fail(`${at}.phases`, "tactical plays require exactly three phases");
       const phaseIds = new Set();
-      moment.phases.forEach((phase, phaseIndex) => { validatePhase(phase, `${at}.phases[${phaseIndex}]`); if (phaseIds.has(phase.id)) fail(`${at}.phases[${phaseIndex}].id`, "must be unique within the moment"); phaseIds.add(phase.id); });
+      moment.phases.forEach((phase, phaseIndex) => { validatePhase(phase, `${at}.phases[${phaseIndex}]`, data.locale); if (phaseIds.has(phase.id)) fail(`${at}.phases[${phaseIndex}].id`, "must be unique within the moment"); phaseIds.add(phase.id); });
       if (moment.group === "play") for (let phaseIndex = 1; phaseIndex < moment.phases.length; phaseIndex += 1) {
         const difference = spatialDifference(moment.phases[phaseIndex - 1], moment.phases[phaseIndex]);
         if (difference.shared < 2) fail(`${at}.phases[${phaseIndex}]`, "must retain at least two stable player identities from the prior phase");
         if (!difference.meaningful) fail(`${at}.phases[${phaseIndex}]`, "must differ meaningfully from the prior phase");
+      }
+      if (moment.group === "play") {
+        const ballPositions = new Set(moment.phases.filter((phase) => phase.ball && typeof phase.ball.x === "number" && typeof phase.ball.y === "number").map((phase) => `${phase.ball.x},${phase.ball.y}`));
+        if (ballPositions.size < 2) fail(`${at}.phases`, "tactical plays must contain at least two distinct ball positions");
       }
     }
     if (moment.group === "play") {
@@ -168,6 +208,7 @@ function validate(data) {
       else for (const key of ["name", "canonicalTerm", "definition", "watchCue", "dilemma", "transferCue"]) requiredString(moment.concept[key], `${at}.concept.${key}`);
     }
   }
+  if (formationGuideCount !== 1) fail("moments", "must contain exactly one context formationGuide comparing both teams");
   if (selection && Number.isInteger(selection.included) && playCount !== selection.included) fail("keyPlaySelection.included", `declares ${selection.included}, but moments contains ${playCount} tactical plays`);
 }
 

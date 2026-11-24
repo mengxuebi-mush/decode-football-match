@@ -45,6 +45,8 @@ function staticCanvasChecks() {
     const size = Number(match[2]);
     if (size < MIN_FONT_PX) failures.push(`canvas font is ${size}px in: ${match[0]}`);
   }
+  if (!/function\s+drawBall\s*\(/u.test(source) || !/drawBall\s*\(ctx,/u.test(source)) failures.push("pitch source must define and call drawBall");
+  if (!/lerpBall\s*\(/u.test(source)) failures.push("pitch source must interpolate explicit ball positions");
   return failures;
 }
 
@@ -122,6 +124,22 @@ async function auditPage(page) {
       }
     }
 
+    const formationCards = [...document.querySelectorAll(".formation-guide-card")].filter(visible);
+    if (document.querySelector(".concept-summary .concept-cue")) failures.push("What to watch is duplicated in the concept summary");
+    for (const card of formationCards) {
+      const copyLefts = [...card.querySelectorAll(".formation-guide-row > span")].map((item) => item.getBoundingClientRect().left);
+      if (copyLefts.length > 1 && Math.max(...copyLefts) - Math.min(...copyLefts) > 1) failures.push(`${selector(card)} formation copy does not share one column`);
+    }
+    if (formationCards.length === 2) {
+      const firstRows = [...formationCards[0].querySelectorAll(".formation-guide-row")];
+      const secondRows = [...formationCards[1].querySelectorAll(".formation-guide-row")];
+      const sideBySide = Math.abs(formationCards[0].getBoundingClientRect().top - formationCards[1].getBoundingClientRect().top) <= 1;
+      if (sideBySide && firstRows.length === secondRows.length) firstRows.forEach((row, index) => {
+        const offset = Math.abs(row.getBoundingClientRect().top - secondRows[index].getBoundingClientRect().top);
+        if (offset > 1) failures.push(`formation comparison row ${index + 1} is misaligned by ${Math.round(offset)}px`);
+      });
+    }
+
     const controls = document.querySelectorAll(".moment-card, .phase-tabs button, .replay-button, .source-link, .evidence-menu summary, .evidence-menu-list a, .formation-guide-card a");
     for (const control of controls) {
       if (!visible(control)) continue;
@@ -129,7 +147,18 @@ async function auditPage(page) {
       if (rect.width + 0.01 < minTarget || rect.height + 0.01 < minTarget) failures.push(`${selector(control)} target is ${Math.round(rect.width)}x${Math.round(rect.height)}px`);
     }
 
-    const pitchFrame = document.querySelector(".pitch-frame");
+    const phaseButtons = [...document.querySelectorAll(".phase-tabs button")].filter(visible);
+    const phaseHeights = phaseButtons.map((button) => button.getBoundingClientRect().height);
+    if (phaseHeights.length > 1 && Math.max(...phaseHeights) - Math.min(...phaseHeights) > 1) failures.push("phase controls do not share one height");
+    for (const button of phaseButtons) {
+      const range = document.createRange();
+      range.selectNodeContents(button);
+      const textHeight = range.getBoundingClientRect().height;
+      const lineHeight = Number.parseFloat(getComputedStyle(button).lineHeight);
+      if (Number.isFinite(lineHeight) && textHeight > lineHeight * 1.5) failures.push(`${selector(button)} phase label wraps to multiple lines`);
+      if (button.scrollWidth > button.clientWidth + 1 || button.scrollHeight > button.clientHeight + 1) failures.push(`${selector(button)} phase label clips or overflows`);
+    }
+
     if (document.querySelector(".teaching-label")) failures.push("pitch contains the removed persistent teaching-reconstruction label");
     const pitchShell = document.querySelector(".pitch-shell");
     if (pitchShell && visible(pitchShell)) {
@@ -137,6 +166,7 @@ async function auditPage(page) {
       const shellBorders = [shellStyle.borderTopWidth, shellStyle.borderRightWidth, shellStyle.borderBottomWidth, shellStyle.borderLeftWidth].map(Number.parseFloat);
       if (shellBorders.some((width) => width > 0.01)) failures.push("pitch shell adds a redundant outer divider around the legend and pitch");
     }
+    const pitchFrame = document.querySelector(".pitch-frame");
     if (pitchFrame && visible(pitchFrame)) {
       const rect = pitchFrame.getBoundingClientRect();
       const ratio = rect.width / rect.height;
@@ -177,27 +207,18 @@ async function auditPage(page) {
       }
     }
 
-    const rootFontPx = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const zoomed = rootFontPx > 24;
-    const titleElement = document.querySelector(".analysis-head h1");
-    const phaseControls = document.querySelector(".phase-controls");
-    if (titleElement && phaseControls && visible(titleElement) && visible(phaseControls)) {
-      const a = titleElement.getBoundingClientRect();
-      const b = phaseControls.getBoundingClientRect();
-      const overlapX = Math.min(a.right, b.right) - Math.max(a.left, b.left);
-      const overlapY = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
-      if (overlapX > 1 && overlapY > 1) failures.push("moment title collides with the phase controls");
+    const pitch = document.querySelector("#pitch-analysis");
+    if (!pitch) failures.push("pitch canvas is missing");
+    else {
+      const ballX = Number(pitch.dataset.ballX);
+      const ballY = Number(pitch.dataset.ballY);
+      if (!Number.isFinite(ballX) || ballX < 0 || ballX > 100 || !Number.isFinite(ballY) || ballY < 0 || ballY > 100) failures.push("pitch must expose one in-bounds ball position");
     }
-    if (document.querySelector(".concept-cue")) failures.push("concept summary duplicates guide content; cues belong only in the learning guide");
+    const ballKey = document.querySelector(".legend .ball-key");
+    if (!ballKey || !visible(ballKey)) failures.push("visible ball legend key is missing");
+    const rootFontPx = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
     for (const guideText of document.querySelectorAll(".learning-guide p")) {
       if (visible(guideText) && Number.parseFloat(getComputedStyle(guideText).fontSize) + 0.01 < rootFontPx) failures.push("learning-guide text is below the 16px body size");
-    }
-    const legend = document.querySelector(".legend");
-    const sourcesSummary = document.querySelector(".evidence-menu summary");
-    if (!zoomed && innerWidth >= 1024 && legend && sourcesSummary && visible(legend) && visible(sourcesSummary)) {
-      const lr = legend.getBoundingClientRect();
-      const sr = sourcesSummary.getBoundingClientRect();
-      if (lr.top >= sr.bottom || sr.top >= lr.bottom) failures.push("pitch legend does not share the sources row on desktop");
     }
 
     if (document.documentElement.scrollWidth > innerWidth + 1) failures.push(`document width ${document.documentElement.scrollWidth}px exceeds viewport ${innerWidth}px`);
@@ -212,6 +233,7 @@ const address = server.httpServer.address();
 const port = typeof address === "object" && address ? address.port : 4173;
 const browser = await launchBrowser();
 const allFailures = staticFailures.map((failure) => `source: ${failure}`);
+let formationGuideRenders = 0;
 
 try {
   for (const scenario of scenarios) {
@@ -228,6 +250,13 @@ try {
       await cards.nth(index).click();
       await page.waitForTimeout(75);
       const momentId = await cards.nth(index).getAttribute("data-moment-id");
+      const formationCards = await page.locator(".formation-guide-card").count();
+      if (formationCards) {
+        formationGuideRenders += 1;
+        if (formationCards !== 2) allFailures.push(`${scenario.name}/${momentId}: formation analysis must render exactly two team cards`);
+        const formationLinks = await page.locator(".formation-guide-card a").count();
+        if (formationLinks !== 2) allFailures.push(`${scenario.name}/${momentId}: both formation cards require a visible source link`);
+      }
       const failures = await auditPage(page);
       if (scenario.requireConceptPeek) {
         const peek = await page.evaluate(() => {
@@ -248,6 +277,8 @@ try {
   await browser.close();
   await new Promise((resolve, reject) => server.httpServer.close((error) => error ? reject(error) : resolve()));
 }
+
+if (formationGuideRenders !== scenarios.length) allFailures.push(`formation analysis rendered in ${formationGuideRenders}/${scenarios.length} viewport scenarios`);
 
 if (allFailures.length) {
   console.error(`UI validation failed with ${allFailures.length} issue(s):`);
